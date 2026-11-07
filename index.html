@@ -75,6 +75,12 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 .hero{display:block;text-align:center;position:relative;padding-top:18px}.hcap{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mu)}.hid,.hsm{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-weight:700;color:var(--ac)}.hid{font-size:24px;margin-top:6px}.hnm{font-size:30px;font-weight:800;line-height:1.15;margin:2px 0 4px}.hun{font-size:14px;color:var(--mu)}.hsm{font-size:17px;margin-top:10px}.hpg{font-size:14px;margin-top:2px}
 .od.dn{opacity:.45}.od.dn b{text-decoration:line-through}.ckb{font-size:20px;line-height:1}
 .eu{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--ln);font-size:14px}.eu:first-child{border-top:0}
+.thp{padding:8px}.thp button{border-radius:20px;white-space:nowrap;flex:none}.thp button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.thT{font-size:17px;font-weight:700;margin:2px 0 10px;line-height:1.3;text-align:center}
+.thr{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--ln);font-size:14px;align-items:baseline}.thr b{text-align:right;font-weight:600}
+.thi{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--ln)}.thi input[type=checkbox]{margin-top:4px;width:18px;height:18px;accent-color:var(--ok);flex:none}.thx{font-weight:600;overflow-wrap:anywhere}.thi.dn .thx{text-decoration:line-through;color:var(--mu)}.thi button{padding:4px 9px}
+.ovd{color:#d64545;font-weight:600}.thg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.fm select,input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:6px 8px;width:100%}
 </style></head><body><main>
 
 <div class="card hero">
@@ -88,16 +94,18 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div class="row" style="margin-top:12px;gap:12px;flex-wrap:wrap;justify-content:center"><label class="lbl">School year <select id="ysy"></select></label><label class="lbl">Term <select id="ytm"><option value="1">1st term</option><option value="2">2nd term</option></select></label><label class="lbl">Semester <select id="ysm"><option value="1">1st semester</option><option value="2">2nd semester</option><option value="3">Summer</option></select></label></div>
 <div class="lbl" id="sy" style="margin-top:8px"></div></div>
 
-<div class="tabs" role="tablist"><button data-tab="ov" class="on">🏠 Overview</button><button data-tab="sch">📅 Schedule</button><button data-tab="st">📝 Tasks</button><button data-tab="eu">🎓 Units</button><button data-tab="pg">📊 Grades</button></div>
+<div class="tabs" role="tablist"><button data-tab="ov" class="on">🏠 Overview</button><button data-tab="th">🧪 Thesis</button><button data-tab="sch">📅 Schedule</button><button data-tab="st">📝 Tasks</button><button data-tab="eu">🎓 Units</button><button data-tab="pg">📊 Grades</button></div>
 
 <div class="pn" id="tab-ov">
 <div class="card"><h2>Deadlines</h2><div id="ov_d"></div></div>
 <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 id="pr_t" style="margin:0">Today’s priorities</h2><input type="date" id="pr_d" style="width:auto"></div>
 <div id="pr_c"></div><div id="pr_l"></div><div class="lbl" id="pr_s" style="margin:4px 0"></div>
-<div class="row"><input id="pr_i" placeholder="Add a priority…" maxlength="80" style="flex:1"><button id="pr_a">Add</button></div>
+<div class="row"><input id="pr_i" placeholder="Add a priority…" maxlength="80" style="flex:1"></div>
+<div class="row"><input type="time" id="pr_tm" style="width:auto" title="Time (optional)"><input id="pr_n" placeholder="Notes (optional)" maxlength="200" style="flex:1"><button id="pr_a">Add</button></div>
 <div class="lbl" style="margin-top:8px">Tip: keep it short and realistic. Pick 3 to 5 things you can truly finish.</div></div>
 <div class="row"><button class="qb" id="ov_qd">＋ Deadline</button><button class="qb" id="ov_qa">＋ Absence</button></div>
 <div class="card"><h2 id="ov_t">Today</h2><div id="ov_c"></div><div class="lbl" style="margin-top:8px">Free time today</div><div id="ov_f"></div></div>
+<div class="card" id="ov_al" style="border-color:#d64545;display:none"><h2>⏰ Due soon</h2><div id="ov_ab"></div><div class="row" style="margin-top:6px"><button id="ov_ax" class="ic" style="width:auto;padding:0 12px">Hide for today</button></div></div>
 <div class="card" id="ov_hc" style="border-color:var(--pen)"><h2>⚠ Heads up</h2><div id="ov_r"></div></div>
 <div class="card" id="ov_uc"><h2>Unlocking after this semester</h2><div class="lbl" style="margin:-6px 0 6px">If you pass your current subjects</div><div id="ov_u"></div></div>
 <div class="card" style="display:flex;gap:10px;align-items:center;justify-content:space-between"><div id="ov_q" style="font-style:italic"></div><button class="ic" id="ov_qn" title="Another quote">↻</button></div>
@@ -105,12 +113,14 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 </div>
 
 <div class="pn" id="tab-sch">
-<div class="card"><div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><h2 id="cal_t" style="margin:0;flex:1">Calendar</h2><button class="ic" data-cm="-1">‹</button><button class="ic" data-cm="0">Today</button><button class="ic" data-cm="1">›</button></div><div class="cg" id="cal_g"></div><div id="cal_d" style="margin-top:10px"></div></div>
-<div class="card"><h2>Class schedule <span class="lbl" id="schsub"></span></h2>
+<div class="card"><div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><h2 id="cal_t" style="margin:0;flex:1">Calendar</h2><button class="ic" data-cm="-1">‹</button><button class="ic" data-cm="0">Today</button><button class="ic" data-cm="1">›</button></div><div class="cg" id="cal_g"></div><div id="cal_d" style="margin-top:10px"></div>
+<div class="row" style="margin-top:8px"><button class="qb" id="cp_b">＋ Add priority</button></div>
+<div id="cp_f" hidden style="margin-top:8px"><div class="fm"><div class="w"><label>Priority<input id="cp_t" maxlength="80" placeholder="What do you need to do?"></label></div><div><label>Time (optional)<input type="time" id="cp_tm"></label></div><div class="w"><label>Notes (optional)<input id="cp_n" maxlength="200" placeholder="Details, room, link…"></label></div></div><div class="row"><button id="cp_a">Add</button><button class="ic" id="cp_x" style="width:auto;padding:0 12px">Cancel</button></div></div></div>
+<details id="dd_sch" open><summary><b>Class schedule</b><span id="schsub"></span></summary><div style="padding:0 14px 14px">
 <div class="row"><button id="addc">＋ Add a class</button><span class="lbl" id="schn"></span></div>
 <div class="lbl" id="schhint" style="margin:4px 0 8px"></div>
-<div class="tw" id="wkw"></div></div>
-<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="margin:0">My classes</h2><button class="qb" id="hfb">Hide finished</button></div><div id="cls" style="margin-top:8px"></div></div>
+<div class="tw" id="wkw"></div></div></details>
+<details id="dd_cls" open><summary><b>My classes</b><span>tap to open</span></summary><div style="padding:0 14px 14px"><div class="row"><button class="qb" id="hfb">Hide finished</button></div><div id="cls" style="margin-top:8px"></div></div></details>
 
 <details><summary><b>Class schedule wallpaper (HD)</b><span>tap to open</span></summary><div style="padding:0 14px 14px">
 <div class="lbl" style="margin-bottom:8px">Pick your Apple device and the picture is made at that screen’s exact native resolution, so it is sharp and fits without cropping or stretching. The preview updates every time you edit a class. It is made on your device, so it also works offline.</div>
@@ -132,7 +142,15 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div><label>Date<input type="date" id="x_date"></label></div><div><label>Time (optional)<input type="time" id="x_time"></label></div></div>
 <div class="row"><button id="x_add">＋ Add</button></div><div id="xl" style="margin-top:8px"></div></div>
 <div class="card"><h2>Course requirements</h2><div class="lbl" style="margin-bottom:6px">List what each subject needs (plates, projects, final requirement) and tick them off so you never get a 7.2.</div><div id="rq_l"></div></div>
-<div class="card"><h2>Phone reminders</h2><div class="lbl" style="margin-bottom:6px">Sends your open deadlines and planned tasks to your Calendar with alerts the day before and on the day. Run it again after adding more; it updates instead of duplicating.</div><div class="row"><button id="rem_b">📲 Add reminders to my phone</button></div><div class="lbl" id="rem_h" style="margin-top:4px"></div></div>
+<div class="card"><h2>Phone reminders</h2><div class="lbl" style="margin-bottom:6px">Sends your open deadlines and planned tasks to your Calendar with alerts the day before and on the day. Run it again after adding more; it updates instead of duplicating.</div><div class="row"><button id="rem_b">📲 Add reminders to my phone</button></div><div class="lbl" id="rem_h" style="margin-top:4px"></div><div class="lbl" style="margin:10px 0 6px">Also get a notification when you open the tracker and something is due today or tomorrow. It only fires while the app is open; the calendar reminders above cover the times it is closed.</div><div class="row"><button id="nt_b">🔔 Alerts: Off</button></div><div class="lbl" id="nt_h" style="margin-top:4px"></div></div>
+<details id="dd_push"><summary><b>Push notifications when the app is closed</b><span>tap to open</span></summary><div style="padding:0 14px 14px">
+<div class="lbl" style="margin-bottom:8px">A free GitHub job checks your deadlines and priorities every 15 minutes and sends a real push through the free ntfy app: a morning summary at 7 AM, a heads-up at 8 PM for tomorrow, and a reminder 1 hour before anything with a time. One-time setup, about 10 minutes. Full steps are in push-setup.md.</div>
+<div class="lbl" id="pn_s" style="margin-bottom:8px"></div>
+<div class="row"><button id="pn_c">Create my notification topic</button><button class="g" id="pn_t">Send test notification</button></div>
+<div class="row"><button class="g" id="pn_ct">Copy topic</button><button class="g" id="pn_cg">Copy Gist ID</button></div>
+<div class="lbl" id="pn_h" style="margin-top:4px"></div>
+<div class="lbl" style="margin-top:8px">1. Install the free <b>ntfy</b> app, tap “+”, and subscribe to your topic (keep the default server ntfy.sh).<br>2. In your GitHub repo, add a secret named <b>GIST_ID</b> with the Gist ID above.<br>3. Add <b>remind.mjs</b> to the repo and create <b>.github/workflows/remind.yml</b>.<br>4. Tap “Send test notification” to check it reaches your phone.</div>
+</div></details>
 <div class="card"><h2>Absences</h2><div class="lbl" style="margin-bottom:6px">Tap + each time you miss a class. The limit is 5 absences per subject. You get a pre-warning at 2 absences and a warning once you go over 2.</div><div id="aw"></div><div id="al"></div></div>
 </div>
 
@@ -142,6 +160,11 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div class="lbl" id="euc" style="margin-top:8px"></div></div>
 <div class="card"><h2>Units by subject</h2><div id="eul"></div></div>
 <div class="card"><h2>Units by term</h2><div id="eut2"></div></div>
+</div>
+
+<div class="pn" id="tab-th" hidden>
+<div class="card thp"><div class="row" style="margin:0;flex-wrap:nowrap;overflow-x:auto" id="th_pills"></div></div>
+<div id="th_body"></div>
 </div>
 
 <div class="pn" id="tab-pg" hidden>
@@ -170,7 +193,7 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div class="card"><h2>Still needed to graduate</h2><div id="rem"></div></div>
 
 <div id="secs"></div>
-<div class="card"><h2>Backup &amp; cloud sync</h2><div class="row"><button class="g" onclick="setupSync()">☁ Set up cloud sync</button><button class="g" onclick="exportData()">⬇ Export backup</button><button class="g" onclick="document.getElementById('imp').click()">⬆ Import backup</button><input type="file" id="imp" accept=".json,application/json" hidden onchange="importData(this.files[0]);this.value=''"></div><div class="lbl" style="margin-top:8px">Your data is always saved on this device and works offline. With cloud sync on, it is also copied to a private GitHub Gist and loads on your other devices.</div></div>
+<div class="card"><h2>Backup &amp; cloud sync</h2><div class="row"><button class="g" onclick="setupSync()">☁ Set up cloud sync</button><button class="g" onclick="exportData()">⬇ Export backup</button><button class="g" onclick="document.getElementById('imp').click()">⬆ Import backup</button><button class="g" id="bk_b" hidden onclick="restoreBak()"></button><input type="file" id="imp" accept=".json,application/json" hidden onchange="importData(this.files[0]);this.value=''"></div><div class="lbl" style="margin-top:8px">Your data is always saved on this device and works offline. With cloud sync on, it is also copied to a private GitHub Gist and loads on your other devices.</div></div>
 <div class="row"><button class="g" id="rs">Reset all my edits</button></div>
 <div class="lbl">Set a subject’s status when you enroll, then enter its grade when released. Choosing a grade marks it Completed automatically. Edits are saved on this device automatically.</div>
 </div>
@@ -193,6 +216,7 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div class="row" style="justify-content:space-between"><button class="g" id="cdel" style="color:#d64545">Delete</button><span class="row"><button class="g" id="ccx">Cancel</button><button id="csv">Save</button></span></div></div></div>
 
 <div class="ov" id="pov"><div class="modal" style="text-align:left"><h2 id="pt2"></h2><div class="lbl">Tick the subjects that must be passed first. A subject you haven’t taken stays locked until they are all Completed.</div><div id="pb"></div><div class="row" style="justify-content:flex-end"><button class="g" id="pcx">Cancel</button><button id="psv">Save</button></div></div></div>
+<div class="ov" id="cfov"><div class="modal" style="text-align:left"><h2>⚠ Sync conflict</h2><div class="lbl" id="cf_t" style="margin-bottom:10px"></div><div class="row" style="flex-direction:column;align-items:stretch"><button id="cf_c" onclick="useCloud()">Use the cloud version</button><button id="cf_l" onclick="keepLocal()">Keep this device’s version</button></div><div class="lbl" style="margin-top:10px">Whichever you don’t pick is saved as a backup. You can bring it back with “Restore the version I replaced” in the Grades tab.</div></div></div>
 <div class="ov" id="qov"><div class="modal" style="text-align:left"><h2 id="q_t"></h2><div id="q_b"></div><div class="row" style="justify-content:flex-end"><button class="g" id="q_x">Close</button><button id="q_s">Add</button></div></div></div>
 <div class="tq" id="tq"></div>
 <div class="ov" id="ov"><div class="modal"><div class="em">🎓</div><h2 id="mt"></h2><div id="mb"></div><div class="row" style="justify-content:center"><button id="mc">Close</button></div></div></div>
@@ -207,10 +231,10 @@ const D=[
 ["3rd Year / 1st Sem",[["NSTP 1","National Service Training Program 1",3],["BCE 313","Hydrology",3],["BCE 311","Structural Theory",4],["BCE 314","Hydraulics",5],["UGE 2","Technical Writing in the Discipline",3],["BCE 315","Numerical Solutions to CE Problems",3],["BCE 312","Highway and Railroad Engineering",3]]],
 ["3rd Year / 2nd Sem",[["CEE 115","Technopreneurship",3],["BCE 324","Engineering Utilities 1",3],["NSTP 2","National Service Training Program 2",3],["BCE 325","Engineering Utilities 2",3],["BCE 322","Geotechnical Engineering 1 (Soil Mechanics)",4],["BCE 321","Building Systems Design",3],["BCE 323","Principles of Reinforced/Prestressed Concrete",5]]],
 ["3rd Year / Summer",[["BCE 326","CE Law, Ethics and Contracts",3],["GE 11","The Entrepreneurial Minds",3],["BCE 327","Field Trip and Seminar",2]]],
-["4th Year / 1st Sem",[["BCE 413","Quantity Surveying",3],["BCES 1","Computer Software in Structural Analysis",3,null],["BCE 412","Principles of Transportation Engineering",3],["BCE 415","CE Project 1",3,null],["BCE 411","Principles of Steel Design",4,null],["GE 9","Ethics (Disciplinal)",3],["BCES 3","Reinforced Concrete Design",3,null]]],
-["4th Year / 2nd Sem",[["BCES 4","Design of Steel Structures",3,null],["CEE 112","Basic Occupational Safety and Health",3,null],["BCET 6","Bridge Engineering",3,null],["BCES 2","Earthquake Engineering",3],["BCES 6","Foundation and Retaining Wall Design",3,null],["BCE 421","CE Project 2",3,null],["BCE 422","Construction Methods and Project Management",4,null]]],
-["4th Year / Summer",[["BCE 423","On-the-Job Training (320 hours)",2,null]]],
-["5th Year / 1st Sem",[["CAED 500C","Career and Personality Development",3,null],["BCE 601","CA-Mathematics, Surveying and Transportation Eng’g",4,null],["BCE 602","CA-Hydraulics and Geotechnical Engineering",3,null],["BCE 603","CA-Structural Engineering and Construction",5,null]]]
+["4th Year / 1st Sem",[["BCE 413","Quantity Surveying",3],["BCES 1","Computer Software in Structural Analysis",3],["BCE 412","Principles of Transportation Engineering",3],["BCE 415","CE Project 1",3],["BCE 411","Principles of Steel Design",4],["GE 9","Ethics (Disciplinal)",3],["BCES 3","Reinforced Concrete Design",3]]],
+["4th Year / 2nd Sem",[["BCES 4","Design of Steel Structures",3],["CEE 112","Basic Occupational Safety and Health",3],["BCET 6","Bridge Engineering",3],["BCES 2","Earthquake Engineering",3],["BCES 6","Foundation and Retaining Wall Design",3],["BCE 421","CE Project 2",3],["BCE 422","Construction Methods and Project Management",4]]],
+["4th Year / Summer",[["BCE 423","On-the-Job Training (320 hours)",2]]],
+["5th Year / 1st Sem",[["CAED 500C","Career and Personality Development",3],["BCE 601","CA-Mathematics, Surveying and Transportation Eng’g",4],["BCE 602","CA-Hydraulics and Geotechnical Engineering",3],["BCE 603","CA-Structural Engineering and Construction",5]]]
 ];
 const GR=[4,3.5,3,2.5,2,1],TG=3,INP=[];
 const ST=[["none","Not yet taken"],["prog","Enrolled · in progress"],["done","Completed"],["fail","Failed · retake"],["inc","Incomplete (7.1 / 7.2)"]];
@@ -221,12 +245,32 @@ if(!S.st)S.st={};if(!S.g)S.g={};
 let pt;
 const sync=t=>{const e=document.getElementById("sy");if(e)e.textContent=t};
 const save=()=>{S.u=Date.now();try{localStorage.setItem("gwa-her-v1",JSON.stringify(S))}catch(e){}push()};
+const KEYS="gwa-her-v1";
+const NTK="gwa-her-nt";let NF={};try{NF=JSON.parse(localStorage.getItem(NTK)||"{}")}catch(e){}
+let SD=false,pT,SC=false;
+const ntSave=()=>{try{localStorage.setItem(NTK,JSON.stringify(NF))}catch(e){}};
 const SK="gwa-her-sync";let SY={};try{SY=JSON.parse(localStorage.getItem(SK)||"{}")}catch(e){}
 let UA=false;
-const GH=(p,o)=>fetch("https://api.github.com"+p,Object.assign({},o,{headers:{Authorization:"Bearer "+SY.t,Accept:"application/vnd.github+json","Content-Type":"application/json"}})).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+const GH=(p,o)=>fetch("https://api.github.com"+p,Object.assign({cache:"no-store"},o,{headers:{Authorization:"Bearer "+SY.t,Accept:"application/vnd.github+json","Content-Type":"application/json"}})).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
 const payload=()=>{const d=JSON.parse(JSON.stringify(S));delete d.theme;return d};
-function push(){if(!SY.id)return;clearTimeout(pt);sync("Syncing…");pt=setTimeout(()=>GH("/gists/"+SY.id,{method:"PATCH",body:JSON.stringify({files:{"gwa.json":{content:JSON.stringify(payload())}}})}).then(()=>sync("☁ Synced")).catch(()=>sync(navigator.onLine?"Sync error: saved on this device":"Offline: saved on this device, will sync later")),600)}
-function adopt(d){const t=S.theme;S=Object.assign({g:{},st:{},ex:false,as:"3",cel:false},d,{theme:t});try{localStorage.setItem("gwa-her-v1",JSON.stringify(S))}catch(e){}$("as").innerHTML=opts(S.as);render()}
+const hm=t=>new Date(t).toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}),BK=SK.replace("sync","bak");let CFD=null;
+function okSync(u){SY.lu=u;SY.last=Date.now();try{localStorage.setItem(SK,JSON.stringify(SY))}catch(e){}sync("☁ Synced · "+hm(SY.last));try{pnUi()}catch(e){}}
+function bak(d,why){try{localStorage.setItem(BK,JSON.stringify({t:Date.now(),why,data:d}))}catch(e){}bakUi()}
+function bakUi(){const b=$("bk_b");if(!b)return;let x=null;try{x=JSON.parse(localStorage.getItem(BK)||"null")}catch(e){}b.hidden=!x;if(x)b.textContent="↩ Restore the version I replaced ("+new Date(x.t).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})+")"}
+function restoreBak(){let x=null;try{x=JSON.parse(localStorage.getItem(BK)||"null")}catch(e){}if(!x||!x.data)return;
+ if(!confirm("Bring back the version saved on "+new Date(x.t).toLocaleString()+"? What you have now is kept as a backup you can switch back to."))return;
+ const cur=payload(),d=x.data;d.u=Date.now();bak(cur,"swap");adopt(d);save()}
+function conflict(d){CFD=d;const f=t=>t?new Date(t).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}):"unknown";
+ $("cf_t").innerHTML="This device and the cloud were both changed since the last sync.<br><b>This device:</b> edited "+f(S.u)+"<br><b>Cloud:</b> edited "+f(d.u);$("cfov").classList.add("on");sync("⚠ Sync needs your choice")}
+function cfClose(){$("cfov").classList.remove("on")}
+function useCloud(){if(!CFD)return;bak(payload(),"local");const d=CFD;CFD=null;cfClose();adopt(d);okSync(d.u||0)}
+function keepLocal(){if(!CFD)return;bak(CFD,"cloud");CFD=null;cfClose();S.u=Date.now();try{localStorage.setItem(KEYS,JSON.stringify(S))}catch(e){}push(true)}
+function push(force){if(!SY.id)return;clearTimeout(pt);sync("Syncing…");pt=setTimeout(async()=>{const u=S.u,body=JSON.stringify(payload());
+ try{
+  if(!force&&SY.lu){const g=await GH("/gists/"+SY.id),f=g.files&&g.files["gwa.json"],d=f?JSON.parse(f.content):null;if(d&&(d.u||0)>SY.lu&&(d.u||0)!==u){conflict(d);return}}
+  await GH("/gists/"+SY.id,{method:"PATCH",body:JSON.stringify({files:{"gwa.json":{content:body}}})});okSync(u)
+ }catch(e){sync(navigator.onLine?"Sync error: saved on this device":"Offline: saved on this device, will sync later")}},600)}
+function adopt(d){const t=S.theme;S=Object.assign({g:{},st:{},ex:false,as:"3",cel:false},d,{theme:t});try{localStorage.setItem(KEYS,JSON.stringify(S))}catch(e){}$("as").innerHTML=opts(S.as);render()}
 async function cloud(){
  if(!SY.t){sync("Saved on this device only");return}
  try{
@@ -234,7 +278,15 @@ async function cloud(){
    SY.id=g?g.id:(await GH("/gists",{method:"POST",body:JSON.stringify({description:"gwa-tracker-her",public:false,files:{"gwa.json":{content:JSON.stringify(payload())}}})})).id;
    localStorage.setItem(SK,JSON.stringify(SY))}
   const g=await GH("/gists/"+SY.id),f=g.files&&g.files["gwa.json"],d=f?JSON.parse(f.content):null;
-  if(d&&(d.u||0)>(S.u||0)){adopt(d);sync("☁ Synced")}else if(d&&(d.u||0)<(S.u||0))push();else sync("☁ Synced")
+  if(!d){push(true);return}
+  const ru=d.u||0,lu=S.u||0,base=SY.lu;
+  if(ru===lu){okSync(ru);return}
+  if(base!=null){const lc=lu>base,rc=ru>base;
+   if(lc&&rc){conflict(d);return}
+   if(rc){bak(payload(),"local");adopt(d);okSync(ru);return}
+   if(lc){push();return}
+   okSync(base);return}
+  if(ru>lu){bak(payload(),"local");adopt(d);okSync(ru)}else{bak(d,"cloud");push(true)}
  }catch(e){sync(navigator.onLine?"Sync error: check your token":"Offline: saved on this device")}}
 function setupSync(){const t=prompt("Paste your GitHub token (classic token with only the “gist” permission). Leave empty to turn cloud sync off.",SY.t||"");
  if(t===null)return;SY=t.trim()?{t:t.trim()}:{};localStorage.setItem(SK,JSON.stringify(SY));cloud()}
@@ -270,11 +322,11 @@ function render(){
  if(!S.rt)S.rt={};if(!S.pre)S.pre={};
  PS=new Set(D.flatMap(x=>x[1]).filter(x=>stOf(x)==="done").map(x=>x[0]));
  if(D.every(([n,l])=>parseInt(n)>=5||l.every(y=>PS.has(y[0]))))PS.add("5th Year Standing");
- let sum=0,gu=0,pu=0,earned=0,tu=0,nd=0,np=0,nn=0,nf=0,cy=0;const rem=[];
+ let sum=0,gu=0,pu=0,earned=0,tu=0,nd=0,np=0,nn=0,nf=0,ni=0,cy=0;const rem=[];
  $("secs").innerHTML=D.map(([n,l])=>{
   let su=0,sd=0,sc=0;
   const rows=l.map(s=>{const g=gradeOf(s),st=stOf(s),u=s[2],cnt=true;tu+=u;su+=u;
-   if(st==="done"){earned+=u;sd+=u;sc++;nd++}else if(st==="prog")np++;else if(st==="fail")nf++;else nn++;
+   if(st==="done"){earned+=u;sd+=u;sc++;nd++}else if(st==="prog")np++;else if(st==="fail")nf++;else if(st==="inc")ni++;else nn++;
    if((st==="done"||st==="fail")&&g!=null){if(cnt){sum+=u*g;gu+=u}}else if(cnt)pu+=u;
    if(st!=="done")rem.push(`<span class="chip ${st}"><b>${s[0]}</b> ${s[1]} · ${u}u</span>`);
    return `<tr><td><select class="sel ${st}" data-s="${s[0]}"${lkOf(s[0],st)?" disabled":""}>${ST.map(o=>`<option value="${o[0]}"${o[0]===st?' selected':''}>${o[1]}</option>`).join("")}</select></td><td><b>${s[0]}</b></td><td class="t">${s[1]}${rtH(s[0])}${pH(s[0],st)}</td><td>${u}</td><td><select data-c="${s[0]}"${lkOf(s[0],st)?" disabled":""}>${opts(g,true,true)}</select></td></tr>`}).join("");
@@ -285,10 +337,10 @@ function render(){
  const gw=gu?sum/gu:0,a=+S.as,pj=(sum+a*pu)/(gu+pu||1);
  $("gwa").textContent=gu?gw.toFixed(3):"–";$("gwan").textContent=`${gu} graded units counted`;
  $("ue").textContent=earned;$("pt").textContent=`of ${tu} units (${(earned/tu*100).toFixed(0)}%)`;
- $("sl").textContent=NT-nd;$("ul").textContent=`${np} in progress · ${nn} not yet taken${nf?` · ${nf} failed`:""}`;
+ $("sl").textContent=NT-nd;$("ul").textContent=`${np} in progress · ${nn} not yet taken${nf?` · ${nf} failed`:""}${ni?` · ${ni} incomplete`:""}`;
  $("pj").textContent=gu+pu?pj.toFixed(3):"–";
  $("b1").style.width=nd/NT*100+"%";$("b2").style.width=np/NT*100+"%";
- $("sp").textContent=`${nd} of ${NT} subjects completed (${(nd/NT*100).toFixed(0)}%) · ${np} in progress · ${nn} not yet taken${nf?` · ${nf} failed`:""} · ${tu-earned} units to go`;
+ $("sp").textContent=`${nd} of ${NT} subjects completed (${(nd/NT*100).toFixed(0)}%) · ${np} in progress · ${nn} not yet taken${nf?` · ${nf} failed`:""}${ni?` · ${ni} incomplete`:""} · ${tu-earned} units to go`;
  const pos=g=>Math.max(0,Math.min(100,(g-1)/3*100));
  $("mf").style.width=pos(gw)+"%";$("mp").style.left=pos(pj)+"%";
  const df=gw-TG;
@@ -304,7 +356,7 @@ document.querySelectorAll("[data-pe]").forEach(e=>e.onclick=()=>editPre(e.datase
  document.querySelectorAll("[data-rp]").forEach(e=>e.onclick=()=>{const c=e.dataset.rp;S.rt[c]=(S.rt[c]||0)+1;save();render()});
  document.querySelectorAll("[data-rm]").forEach(e=>e.onclick=()=>{const c=e.dataset.rm;S.rt[c]=(S.rt[c]||0)-1;if(S.rt[c]<=0)delete S.rt[c];save();render()});
  document.querySelectorAll("details").forEach(d=>d.ontoggle=()=>{OPEN[d.dataset.n]=d.open});
- renderSch();
+ renderSch();try{renderTh()}catch(e){}
  if(all&&!S.cel){S.cel=true;save();if(UA)celebrate(gw)}else if(!all&&S.cel){S.cel=false;save()}UA=false;
 }
 /* ---- Class schedule + enrolled units ---- */
@@ -334,7 +386,7 @@ function renderSch(){
   const PH=64,sh=Math.floor(Math.min(...timed.map(c=>mins(c.s)))/60),eh=Math.ceil(Math.max(...timed.map(c=>mins(c.e)))/60),H=(eh-sh)*PH;
   const hrs=Array.from({length:eh-sh+1},(_,i)=>sh+i);
   const lines=hrs.map(h=>`<div class="hl" style="top:${(h-sh)*PH}px"></div>`).join("");
-  const cols=DAYS.map(([k])=>`<div class="dc" style="height:${H}px">${lines}${cl.map((c,i)=>inTm(c)&&(c.days||[]).includes(k)&&c.s&&c.e&&!(S.hf&&isDone(c))?`<button class="ev" data-ce="${c.id}" style="background:${isDone(c)?"#8b8b94":COL(i)};${isDone(c)?"opacity:.4;":""}top:${(mins(c.s)-sh*60)/60*PH}px;height:${Math.max(24,(mins(c.e)-mins(c.s))/60*PH-2)}px" title="${esc(c.desc)}"><b>${esc(c.code)}</b><span class="ds">${esc(c.desc)}</span>${t12(c.s)}–${t12(c.e)}${c.room?" · "+esc(c.room):""}</button>`:"").join("")}</div>`).join("");
+  const cols=DAYS.map(([k])=>`<div class="dc" style="height:${H}px">${lines}${cl.map((c,i)=>inTm(c)&&(c.days||[]).includes(k)&&c.s&&c.e&&!(S.hf&&isDone(c))?`<button class="ev" data-ce="${c.id}" style="background:${isDone(c)?"#8b8b94":COL(i)};${isDone(c)?"opacity:.4;":""}top:${(mins(c.s)-sh*60)/60*PH}px;height:${Math.max(24,(mins(c.e)-mins(c.s))/60*PH-2)}px" title="${esc(c.desc)}"><b>${esc(c.code)}</b><span class="ds">${esc(c.desc)}</span>${t12(c.s)}–${t12(c.e)}${c.room?" · "+esc(c.room):""}${c.sec?" · Sec "+esc(c.sec):""}</button>`:"").join("")}</div>`).join("");
   $("wkw").innerHTML=`<div class="wk"><div class="hd"></div>${DAYS.map(d=>`<div class="hd">${d[1]}</div>`).join("")}<div style="position:relative;height:${H}px">${hrs.map(h=>`<span class="hr" style="position:absolute;left:0;right:0;top:${(h-sh)*PH-7}px">${t12(String(h).padStart(2,"0")+":00").replace(":00","")}</span>`).join("")}</div>${cols}</div>`}
  $("hfb").textContent=S.hf?"Show finished":"Hide finished";$("hfb").classList.toggle("on",!!S.hf);
  const ord=cl.map((c,i)=>({c,i})).filter(o=>inTm(o.c)&&!(S.hf&&isDone(o.c))).sort((a,b)=>(isDone(a.c)-isDone(b.c))||(a.c.s||"99:99").localeCompare(b.c.s||"99:99"));
@@ -385,6 +437,7 @@ $("wpv").innerHTML=["iPhone","iPad","MacBook"].map(g=>`<optgroup label="${g==="M
  if(dv==null||!DEVS[+dv])dv=ios?di("iPhone 17 Pro /"):ipad?di("iPad Air 11"):di("MacBook Air 13-inch (M2");
  $("wpv").value=dv;if(dor==="l"||dor==="p")$("wpo").value=dor}
 const AL=5,AW=2;
+const absLog=c=>(c.absLog||[]).slice().sort((a,b)=>b.d.localeCompare(a.d)).map(x=>`<div class="mt2">📅 ${new Date(x.d+"T00:00").toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}${x.r?" · "+esc(x.r):""} <button class="dnb" data-adl="${c.id}:${x.id}" title="Remove" style="padding:0 8px;margin:0 0 0 4px">✕</button></div>`).join("");
 function absInfo(c){const a=c.abs||0,l=AL-a;
  if(a>AL)return["bad","⚠ Over the limit by "+(a-AL)];if(a===AL)return["bad","⚠ Limit reached: no more absences allowed"];
  if(a>AW)return["warn","⚠ Warning: only "+l+" more absence"+(l===1?"":"s")+" allowed"];
@@ -393,7 +446,7 @@ const absStyle=l=>l==="bad"?"color:#d64545;font-weight:600":l==="warn"?"color:va
 function absBanner(cl){const b=cl.filter(c=>(c.abs||0)>=AW);if(!b.length)return"";const red=b.some(c=>absInfo(c)[0]==="bad"),col=red?"#d64545":"var(--pen)";
  return `<div style="border:1px solid ${col};color:${col};border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:13px"><b>⚠ Absence alert</b>${b.map(c=>`<div>${esc(c.code)} (${c.abs} / ${AL}): ${absInfo(c)[1].replace("⚠ ","")}</div>`).join("")}</div>`}
 function renderStudy(){renderStudy0();renderRq();renderOv()}
-function renderRq(){$("rq_l").innerHTML=CL().filter(c=>{const q=find(c.code);return !isDone(c)&&!(q&&["done","fail","inc"].includes(stOf(q)))}).map(c=>{const r=c.rq||[],left=r.filter(x=>!x.d).length;return `<div style="margin-bottom:12px"><b>${esc(c.code)} · ${esc(dsc(c.desc))}</b> <span class="lbl">${r.length?(left?left+" left":"all done ✅"):""}</span>${r.map(x=>`<div class="cl${x.d?" dn":""}"><input type="checkbox" data-rk="${c.id}:${x.id}"${x.d?" checked":""} style="width:auto;margin-top:3px"><div class="bd">${esc(x.t)}</div><button class="dnb" data-rx="${c.id}:${x.id}">✕</button></div>`).join("")}<div class="row"><input data-ri="${c.id}" placeholder="Add a requirement (e.g. Plate 3)" maxlength="80" style="flex:1"><button data-ra="${c.id}">Add</button></div></div>`}).join("")||'<div class="lbl">No ongoing classes yet. Add your classes in the Schedule tab and they will show up here.</div>'}
+function renderRq(){$("rq_l").innerHTML=CL().filter(c=>{const q=find(c.code);return !isDone(c)&&!(q&&["done","fail","inc"].includes(stOf(q)))}).map(c=>{const r=c.rq||[],left=r.filter(x=>!x.d).length;return `<div style="margin-bottom:12px"><b>${esc(c.code)} · ${esc(dsc(c.desc))}</b> <span class="lbl">${r.length?(left?left+" left":"all done ✅"):""}</span>${r.map(x=>`<div class="cl${x.d?" dn":""}"><input type="checkbox" data-rk="${c.id}:${x.id}"${x.d?" checked":""} style="width:auto;margin-top:3px"><div class="bd">${esc(x.t)}</div><button class="dnb" data-rx="${c.id}:${x.id}">✕</button></div>`).join("")}<div class="row"><input data-ri="${c.id}" placeholder="Add a requirement (e.g. Plate 3)" maxlength="80" style="flex:1"><button data-ra="${c.id}">Add</button></div></div>`}).join("")||'<div class="lbl">No ongoing classes.</div>'}
 function rqAdd(id){const i=document.querySelector(`[data-ri="${id}"]`),v=i.value.trim(),k=CL().find(z=>z.id===id);if(!v||!k)return;(k.rq=k.rq||[]).push({id:"r"+Date.now(),t:v,d:false});save();renderStudy()}
 $("rq_l").addEventListener("click",ev=>{const a=ev.target.closest("[data-ra]");if(a){rqAdd(a.dataset.ra);return}const x=ev.target.closest("[data-rx]");if(x){const[c,i]=x.dataset.rx.split(":"),k=CL().find(z=>z.id===c);if(k){k.rq=(k.rq||[]).filter(r=>r.id!==i);save();renderStudy()}}});
 $("rq_l").addEventListener("change",ev=>{const t=ev.target.dataset.rk;if(!t)return;const[c,i]=t.split(":"),k=CL().find(z=>z.id===c),r=k&&(k.rq||[]).find(z=>z.id===i);if(r){r.d=ev.target.checked;save();renderStudy()}});
@@ -406,26 +459,26 @@ function renderStudy0(){
  const t0=new Date();t0.setHours(0,0,0,0);
  const ex=S.exams.slice().sort((a,b)=>(!!a.done-!!b.done)||(a.date+(a.time||"")).localeCompare(b.date+(b.time||"")));
  $("xl").innerHTML=ex.map(e=>{const d=Math.round((new Date(e.date+"T00:00")-t0)/864e5),lab=d===0?"Today":d===1?"Tomorrow":d>1?"in "+d+" days":(-d)+" day"+(d===-1?"":"s")+" overdue",hot=!e.done&&d<=2;
-  return `<div class="cl${e.done?" dn":""}"><input type="checkbox" data-xd="${e.id}"${e.done?" checked":""} style="width:auto;margin-top:3px"><div class="bd"><b>${esc(e.type)}${e.code?" · "+esc(e.code):""}${e.title?" · "+esc(e.title):""}</b><div class="mt2">${new Date(e.date+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}${e.time?" · "+t12(e.time):""}${e.pass?" · "+esc(e.pass):""} · <span style="${hot?"color:#d64545;font-weight:600":""}">${e.done?"done":lab}</span></div></div><button class="dnb" data-xx="${e.id}" title="Delete">✕</button></div>`}).join("")||'<div class="lbl">Nothing added yet.</div>';
+  return `<div class="cl${e.done?" dn":""}"><input type="checkbox" data-xd="${e.id}"${e.done?" checked":""} style="width:auto;margin-top:3px"><div class="bd"><b>${esc(e.type)}${e.code?" · "+esc(e.code):""}${e.title?" · "+esc(e.title):""}</b><div class="mt2">${new Date(e.date+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}${e.time?" · "+t12(e.time):""}${e.pass?" · "+esc(e.pass):""} · <span style="${hot?"color:#d64545;font-weight:600":""}">${e.done?"done":lab}</span></div></div><button class="dnb" data-ed="d:${e.id}" title="Edit">✎</button> <button class="dnb" data-xx="${e.id}" title="Delete">✕</button></div>`}).join("")||'<div class="lbl">Nothing added yet.</div>';
  $("aw").innerHTML=absBanner(cl);
- $("al").innerHTML=cl.map(c=>{const a=c.abs||0,[l,m]=absInfo(c);return `<div class="cl"><div class="bd"><b>${esc(c.code)} · ${esc(dsc(c.desc))}</b><div class="mt2" style="${absStyle(l)}">${m}</div></div><div class="row" style="margin:0;flex-wrap:nowrap"><button class="ic" data-am="${c.id}">−</button><b style="min-width:44px;text-align:center;${a>AW?"color:#d64545":a===AW?"color:var(--pen)":""}">${a} / ${AL}</b><button class="ic" data-ap="${c.id}">+</button></div></div>`}).join("")||'<div class="lbl">No ongoing classes.</div>'}
+ $("al").innerHTML=cl.map(c=>{const a=c.abs||0,[l,m]=absInfo(c);return `<div class="cl"><div class="bd"><b>${esc(c.code)} · ${esc(dsc(c.desc))}</b><div class="mt2" style="${absStyle(l)}">${m}</div>${absLog(c)}</div><div class="row" style="margin:0;flex-wrap:nowrap"><button class="ic" data-am="${c.id}">−</button><b style="min-width:44px;text-align:center;${a>AW?"color:#d64545":a===AW?"color:var(--pen)":""}">${a} / ${AL}</b><button class="ic" data-ap="${c.id}">+</button></div></div>`}).join("")||'<div class="lbl">No ongoing classes.</div>'}
 const YMD=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"),HM=m=>String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0"),DUR=m=>(m>=60?Math.floor(m/60)+"h ":"")+(m%60?m%60+"m":"");
 function renderOv(){
  const now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate()),cl=CL(),act=cl.filter(c=>!isDone(c));
  const dk=["","M","T","W","Th","F","Sa"][now.getDay()],tm=S.tm==="2"?"2nd Term":"1st Term",nm=now.getHours()*60+now.getMinutes(),inT=c=>c.term==="Sem"||c.term===tm;
  $("hsm").textContent=S.sm==="3"?"Summer "+String(S.sy||"").slice(5):(S.sm==="2"?"Second":"First")+" Semester "+String(S.sy||"").replace(/^(\d{4})-\d{2}(\d{2})$/,"$1-$2");
  $("ov_t").textContent="Today · "+now.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
- const td=act.filter(c=>dk&&c.s&&c.e&&(c.days||[]).includes(dk)&&inT(c)).sort((a,b)=>a.s.localeCompare(b.s)),nx=td.find(c=>mins(c.e)>nm);
- $("ov_c").innerHTML=td.map(c=>{const st=mins(c.e)<=nm?"Finished":mins(c.s)<=nm?"Now":c===nx?"Next":"";return `<div class="cl${st==="Finished"?" dn":""}"><div class="tm">${t12(c.s)}<small>to ${t12(c.e)}</small></div><div class="bd"><b>${esc(c.code)} · ${esc(dsc(c.desc))}${st&&st!=="Finished"?`<span class="nw">${st}</span>`:""}</b><div class="mt2">${c.room?"Room "+esc(c.room):"No room set"}${c.link?` · <a href="${esc(c.link)}" target="_blank" rel="noopener">🔗 Link</a>`:""}</div>${c.note?`<div class="mt2">📝 ${esc(c.note)}</div>`:""}</div></div>`}).join("")||`<div class="lbl">${dk?"No classes today. 🎉":"No classes on Sundays."}</div>`;
+ const hl=PHH[YMD(now)],hol=!!hl&&hl[1]!=="W"&&!SC,hb=hl?`<div class="eu" style="margin-bottom:6px"><span>🇵🇭 <b>${esc(hl[0])}</b> · ${PHT[hl[1]]}${hl[1]==="W"?" · classes still hold":(SC?" · showing classes anyway":" · no classes today")}</span>${hl[1]!=="W"?`<button class="ic" id="ov_sc" style="width:auto;padding:0 10px">${SC?"Hide classes":"Show classes"}</button>`:""}</div>`:"",td=hol?[]:act.filter(c=>dk&&c.s&&c.e&&(c.days||[]).includes(dk)&&inT(c)).sort((a,b)=>a.s.localeCompare(b.s)),nx=td.find(c=>mins(c.e)>nm);
+ $("ov_c").innerHTML=hb+td.map(c=>{const st=mins(c.e)<=nm?"Finished":mins(c.s)<=nm?"Now":c===nx?"Next":"";return `<div class="cl${st==="Finished"?" dn":""}"><div class="tm">${t12(c.s)}<small>to ${t12(c.e)}</small></div><div class="bd"><b>${esc(c.code)} · ${esc(dsc(c.desc))}${st&&st!=="Finished"?`<span class="nw">${st}</span>`:""}</b><div class="mt2">${c.room?"Room "+esc(c.room):"No room set"}${c.link?` · <a href="${esc(c.link)}" target="_blank" rel="noopener">🔗 Link</a>`:""}</div>${c.note?`<div class="mt2">📝 ${esc(c.note)}</div>`:""}</div></div>`}).join("")||(hol?"":`<div class="lbl">${dk?"No classes today. 🎉":"No classes on Sundays."}</div>`);
  let cur=Math.max(420,nm);const gaps=[];
  td.forEach(c=>{const a=mins(c.s),e=mins(c.e);if(a-cur>=30)gaps.push([cur,a]);cur=Math.max(cur,e)});
  if(1260-cur>=30)gaps.push([cur,1260]);
  $("ov_f").innerHTML=gaps.map(g=>`<span class="chip">${t12(HM(g[0]))} – ${t12(HM(g[1]))} · ${DUR(g[1]-g[0])}</span>`).join("")||'<span class="lbl">No free time left today.</span>';
  const rc=x=>x&&x.dAt&&Date.now()-x.dAt<30000,tk=[];
- Object.keys(S.pri||{}).forEach(k=>S.pri[k].forEach(x=>{if(!x.d||rc(x)){const d=Math.round((new Date(k+"T00:00")-t0)/864e5);if(d>=1)tk.push({e:{type:"Task",code:"",title:x.t,date:k,time:"",pass:"",done:x.d,id:"p:"+k+":"+x.id},d})}}));
+ Object.keys(S.pri||{}).forEach(k=>S.pri[k].forEach(x=>{if(!x.d||rc(x)){const d=Math.round((new Date(k+"T00:00")-t0)/864e5);if(d>=1)tk.push({e:{type:"Task",code:"",title:x.t,date:k,time:x.tm||"",pass:x.n?"📝 "+x.n:"",done:x.d,id:"p:"+k+":"+x.id},d})}}));
  const ex=(S.exams||[]).filter(e=>!e.done||rc(e)).map(e=>({e:{...e,id:"d:"+e.id},d:Math.round((new Date(e.date+"T00:00")-t0)/864e5)})).concat(tk).sort((a,b)=>(!!a.e.done-!!b.e.done)||a.d-b.d),soon=ex.filter(o=>o.d<=14),later=ex.length-soon.length;
  $("ov_d").innerHTML=soon.map(({e,d})=>{const lab=d<0?(-d)+" day"+(d===-1?"":"s")+" overdue":d===0?"Today":d===1?"Tomorrow":"in "+d+" days";return `<div class="eu od${e.done?" dn":""}" data-od="${e.id}" style="cursor:pointer;gap:10px;align-items:flex-start"><span class="ckb">${e.done?"☑":"☐"}</span><span style="flex:1"><b>${esc(e.type)}${e.code?" · "+esc(e.code):""}</b>${e.title?" · "+esc(e.title):""}<br><span class="lbl">${new Date(e.date+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}${e.time?" · "+t12(e.time):""}${e.pass?" · "+esc(e.pass):""}</span></span><span style="${!e.done&&d<=2?"color:#d64545;font-weight:600":""}">${e.done?"done":lab}</span></div>`}).join("")||'<div class="lbl">No deadlines in the next 2 weeks.</div>';
- for(let i=0;i<=7;i++){const dt=new Date(t0);dt.setDate(t0.getDate()+i);const sn=S.sy==="2026-2027"?SCH[YMD(dt)]:"";if(sn)$("ov_d").innerHTML+=`<div class="eu"><span>🏫 ${sn}</span><span class="lbl">${i===0?"today":i===1?"tomorrow":"in "+i+" days"}</span></div>`}
+ for(let i=0;i<=7;i++){const dt=new Date(t0);dt.setDate(t0.getDate()+i);const hh=PHH[YMD(dt)];if(hh)$("ov_d").innerHTML+=`<div class="eu"><span>🇵🇭 ${esc(hh[0])} <span class="lbl">· ${PHT[hh[1]]}</span></span><span class="lbl">${i===0?"today":i===1?"tomorrow":"in "+i+" days"}</span></div>`;const sn=S.sy==="2026-2027"?SCH[YMD(dt)]:"";if(sn)$("ov_d").innerHTML+=`<div class="eu"><span>🏫 ${sn}</span><span class="lbl">${i===0?"today":i===1?"tomorrow":"in "+i+" days"}</span></div>`}
  if(later>0)$("ov_d").innerHTML+=`<div class="lbl" style="margin-top:6px">+ ${later} more later</div>`;
  const R=[];act.filter(c=>(c.abs||0)>=AW).forEach(c=>{const[l,m]=absInfo(c);R.push(`<span style="${absStyle(l)}"><b>${esc(c.code)}</b> · ${c.abs}/${AL} absences: ${m.replace("⚠ ","")}</span>`)});
  const ovl=act.filter(c=>confl(c,cl).length);if(ovl.length)R.push("⚠ Schedule overlap: "+ovl.map(c=>esc(c.code)).join(", "));
@@ -438,9 +491,30 @@ function renderOv(){
  const P2=new Set([...PS,...all.filter(q=>stOf(q)==="prog").map(q=>q[0])]);if(D.every(([n,l])=>parseInt(n)>=5||l.every(y=>P2.has(y[0]))))P2.add("5th Year Standing");
  const un=all.filter(q=>stOf(q)==="none"&&lkOf(q[0],"none")&&pre(q[0]).every(x=>P2.has(x)));
  renderPri();renderCal();renderTg();renderGt();
- $("ov_u").innerHTML=un.slice(0,8).map(q=>`<span class="chip"><b>${esc(q[0])}</b> ${esc(dsc(q[1]))}</span>`).join("")+(un.length>8?`<div class="lbl">+ ${un.length-8} more</div>`:"");$("ov_uc").style.display=un.length?"":"none"}
+ $("ov_u").innerHTML=un.slice(0,8).map(q=>`<span class="chip"><b>${esc(q[0])}</b> ${esc(dsc(q[1]))}</span>`).join("")+(un.length>8?`<div class="lbl">+ ${un.length-8} more</div>`:"");$("ov_uc").style.display=un.length?"":"none";chkAlerts();pnUi()}
+$("ov_c").onclick=ev=>{if(ev.target.id==="ov_sc"){SC=!SC;renderOv()}};
+let QE="";
+function editItem(ck){const k=ck.split(":");QE=ck;const cl=CL().filter(c=>!isDone(c));let h="";
+ if(k[0]==="d"){const e=(S.exams||[]).find(x=>x.id===k[1]);if(!e)return;
+  const so=cl.map(c=>`<option value="${esc(c.code)}">${esc(c.code)} · ${esc(dsc(c.desc))}</option>`).join("")+(e.code&&!cl.some(c=>c.code===e.code)?`<option value="${esc(e.code)}">${esc(e.code)}</option>`:"")+'<option value="">General</option>';
+  const ty=["Exam","Quiz","Assignment","Final requirement","Deadline"].map(t=>`<option${t===e.type?" selected":""}>${t}</option>`).join(""),ps=["Face-to-face","Online (BBL)"].map(t=>`<option${t===e.pass?" selected":""}>${t}</option>`).join("");
+  $("q_t").textContent="Edit deadline";
+  h=`<div class="fm"><div class="w"><label>Subject<select id="e_sub" style="width:100%">${so}</select></label></div><div><label>Type<select id="e_type" style="width:100%">${ty}</select></label></div><div><label>To pass<select id="e_pass" style="width:100%">${ps}</select></label></div><div class="w"><label>Title (optional)<input id="e_title" value="${esc(e.title||"")}"></label></div><div><label>Date<input type="date" id="e_date" value="${esc(e.date)}"></label></div><div><label>Time (optional)<input type="time" id="e_time" value="${esc(e.time||"")}"></label></div></div>`}
+ else{const x=((S.pri||{})[k[1]]||[]).find(z=>z.id===k[2]);if(!x)return;$("q_t").textContent="Edit priority";
+  h=`<div class="fm"><div class="w"><label>Priority<input id="e_t" maxlength="80" value="${esc(x.t)}"></label></div><div><label>Date<input type="date" id="e_date" value="${esc(k[1])}"></label></div><div><label>Time (optional)<input type="time" id="e_tm" value="${esc(x.tm||"")}"></label></div><div class="w"><label>Notes (optional)<input id="e_n" maxlength="200" value="${esc(x.n||"")}"></label></div></div>`}
+ $("q_b").innerHTML=h;$("q_b").dataset.m="e";$("q_s").hidden=false;$("q_s").textContent="Save";$("qov").classList.add("on")}
+function saveEdit(){const k=QE.split(":"),d=$("e_date").value;if(!d){alert("Please choose a date.");return}
+ if(k[0]==="d"){const e=(S.exams||[]).find(x=>x.id===k[1]);if(!e){qClose();return}e.code=$("e_sub").value;e.type=$("e_type").value;e.pass=$("e_pass").value;e.title=$("e_title").value.trim();e.date=d;e.time=$("e_time").value}
+ else{const a=(S.pri||{})[k[1]]||[],x=a.find(z=>z.id===k[2]),v=$("e_t").value.trim();if(!x){qClose();return}if(!v){alert("Please enter a title.");return}
+  x.t=v;x.tm=$("e_tm").value;x.n=$("e_n").value.trim();if(d!==k[1]){S.pri[k[1]]=a.filter(z=>z!==x);(S.pri[d]=S.pri[d]||[]).push(x)}}
+ save();qClose();renderStudy()}
+function absOpen(cid){const c=CL().find(x=>x.id===cid);if(!c)return;QE=cid;$("q_t").textContent="Log absence · "+c.code;
+ $("q_b").innerHTML=`<div class="fm"><div><label>Date<input type="date" id="a_date" value="${YMD(new Date())}"></label></div><div class="w"><label>Reason (optional)<input id="a_r" maxlength="120" placeholder="e.g. sick, family matter"></label></div></div>`;
+ $("q_b").dataset.m="ea";$("q_s").hidden=false;$("q_s").textContent="Add";$("qov").classList.add("on")}
+function saveAbs(){const c=CL().find(x=>x.id===QE),d=$("a_date").value;if(!c)return;if(!d){alert("Please choose a date.");return}
+ c.abs=(c.abs||0)+1;(c.absLog=c.absLog||[]).push({id:"a"+Date.now(),d,r:$("a_r").value.trim()});save();qClose();renderStudy()}
 function qClose(){$("qov").classList.remove("on");$("ov_qd").classList.remove("on");$("ov_qa").classList.remove("on")}
-function qOpen(m){$("ov_qd").classList.toggle("on",m==="d");$("ov_qa").classList.toggle("on",m==="a");const cl=CL().filter(c=>!isDone(c));$("q_t").textContent=m==="d"?"Add a deadline":"Log an absence";$("q_s").hidden=m!=="d";$("q_b").dataset.m=m;
+function qOpen(m){$("ov_qd").classList.toggle("on",m==="d");$("ov_qa").classList.toggle("on",m==="a");const cl=CL().filter(c=>!isDone(c));$("q_t").textContent=m==="d"?"Add a deadline":"Log an absence";$("q_s").hidden=m!=="d";$("q_s").textContent="Add";$("q_b").dataset.m=m;
  if(m==="d")$("q_b").innerHTML=`<div class="fm"><div class="w"><label>Subject<select id="q_sub" style="width:100%">${cl.map(c=>`<option value="${esc(c.code)}">${esc(c.code)} · ${esc(dsc(c.desc))}</option>`).join("")}<option value="">General</option></select></label></div><div><label>Type<select id="q_type" style="width:100%"><option>Exam</option><option>Quiz</option><option>Assignment</option><option>Final requirement</option><option>Deadline</option></select></label></div><div><label>To pass<select id="q_pass" style="width:100%"><option>Face-to-face</option><option>Online (BBL)</option></select></label></div><div class="w"><label>Title (optional)<input id="q_title"></label></div><div class="w"><label>Date<input type="date" id="q_date" value="${YMD(new Date())}"></label></div></div>`;
  else $("q_b").innerHTML=(cl.map(c=>{const[l,x]=absInfo(c);return `<div class="cl"><div class="bd"><b>${esc(c.code)} · ${esc(dsc(c.desc))}</b><div class="mt2" style="${absStyle(l)}">${c.abs||0} / ${AL} · ${x}</div></div><button data-qa="${c.id}">+1 absent</button></div>`}).join("")||'<div class="lbl">No ongoing classes.</div>')+'<div class="lbl">Tap once per absence. To undo one, use the Tasks tab.</div>';
  $("qov").classList.add("on")}
@@ -460,6 +534,31 @@ function renderGt(){let cs=0,cg=0;const P=[];
  const W=320,H=170,lo=Math.floor((Math.min(...P.map(p=>Math.min(p.s,p.c)))-.1)*4)/4,hi=4,X=i=>P.length===1?W/2:30+i*(W-50)/(P.length-1),Y=v=>16+(hi-v)/(hi-lo)*108;
  const ln=(k,st)=>`<polyline fill="none" style="${st}" points="${P.map((p,i)=>X(i)+","+Y(p[k])).join(" ")}"/>`;
  $("gt").innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${[hi,(hi+lo)/2,lo].map(v=>`<line x1="26" x2="${W-8}" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--ln)"/><text x="22" y="${Y(v)+3}" text-anchor="end" font-size="9" style="fill:var(--mu)">${v.toFixed(2)}</text>`).join("")}${ln("s","stroke:var(--mu);stroke-width:1.5;stroke-dasharray:4 3")}${ln("c","stroke:var(--ac);stroke-width:2.5")}${P.map((p,i)=>`<circle cx="${X(i)}" cy="${Y(p.c)}" r="3.5" style="fill:var(--ac)"/><text x="${X(i)}" y="${Y(p.c)-8}" text-anchor="middle" font-size="9.5" font-weight="700" style="fill:var(--tx)">${p.c.toFixed(2)}</text><text x="${X(i)}" y="${H-24}" text-anchor="middle" font-size="9" style="fill:var(--mu)">${p.l}</text>`).join("")}</svg><div class="lbl">Solid line: GWA so far · dashed: that semester only. Latest GWA <b>${P[P.length-1].c.toFixed(3)}</b>.</div>`}
+function dueList(){const now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate()),out=[];
+ const dl=k=>Math.round((new Date(k+"T00:00")-t0)/864e5);
+ (S.exams||[]).forEach(e=>{if(e.done)return;const d=dl(e.date);if(d<=1&&d>=-7)out.push({id:"d:"+e.id,d,time:e.time||"",t:(e.type||"Deadline")+(e.code?" · "+e.code:"")+(e.title?" · "+e.title:"")})});
+ Object.keys(S.pri||{}).forEach(k=>{const d=dl(k);if(d<0||d>1)return;S.pri[k].forEach(x=>{if(!x.d)out.push({id:"p:"+k+":"+x.id,d,time:x.tm||"",t:"Priority · "+x.t})})});
+ try{thDue().forEach(o=>{const d=dl(o.k);if(d<=1&&d>=(o.nov?0:-7))out.push({id:"th:"+o.id,d,time:o.tm||"",t:o.t})})}catch(e){}
+ return out.sort((a,b)=>a.d-b.d||(a.time||"99").localeCompare(b.time||"99"))}
+const dueLab=d=>d<0?(-d)+" day"+(d===-1?"":"s")+" overdue":d===0?"Today":"Tomorrow";
+function ntState(){const h=$("nt_h"),b=$("nt_b");if(!b)return;const ok=typeof Notification!=="undefined";
+ const on=ok&&NF.on&&Notification.permission==="granted";b.textContent="🔔 Alerts: "+(on?"On":"Off");
+ h.textContent=!ok?"Notifications are not available here. On iPhone, add the tracker to your Home Screen and open it from there (iOS 16.4 or newer). The Due soon banner still works.":ok&&Notification.permission==="denied"?"Notifications are blocked for this site. Allow them in your phone or browser settings, then tap again.":""}
+function ntShow(title,body){try{if("serviceWorker"in navigator&&navigator.serviceWorker.ready){navigator.serviceWorker.ready.then(r=>r.showNotification(title,{body,tag:"gwa-due",renotify:true})).catch(()=>{try{new Notification(title,{body})}catch(e){}});return}}catch(e){}try{new Notification(title,{body})}catch(e){}}
+function chkAlerts(){const L=dueList(),card=$("ov_al");if(!card)return;ntState();const td=YMD(new Date());
+ const hide=NF.hide===td;card.style.display=L.length&&!hide?"":"none";
+ $("ov_ab").innerHTML=L.map(o=>`<div class="eu"><span><b>${esc(o.t)}</b>${o.time?" · "+t12(o.time):""}</span><span style="${o.d<=0?"color:#d64545;font-weight:600":""}">${dueLab(o.d)}</span></div>`).join("");
+ if(typeof Notification==="undefined"||!NF.on||Notification.permission!=="granted"||!L.length)return;
+ NF.sent=NF.sent||{};const nm=new Date().getHours()*60+new Date().getMinutes(),fresh=[];
+ L.forEach(o=>{const k=o.id+"|"+td;if(!NF.sent[k]){NF.sent[k]=1;fresh.push(dueLab(o.d)+": "+o.t+(o.time?" at "+t12(o.time):""))}
+  if(o.d===0&&o.time){const m=mins(o.time),k2=o.id+"|"+td+"|1h";if(m-nm<=60&&m-nm>=0&&!NF.sent[k2]){NF.sent[k2]=1;fresh.push("In "+(m-nm)+" min: "+o.t)}}});
+ const ks=Object.keys(NF.sent);if(ks.length>300)ks.filter(k=>k.indexOf(td)<0).forEach(k=>delete NF.sent[k]);
+ if(fresh.length){ntSave();ntShow("⏰ "+fresh.length+" deadline"+(fresh.length===1?"":"s")+" due",fresh.slice(0,5).join("\n"))}}
+$("ov_ax").onclick=()=>{NF.hide=YMD(new Date());ntSave();chkAlerts()};
+$("nt_b").onclick=async()=>{if(typeof Notification==="undefined"){ntState();return}
+ if(NF.on&&Notification.permission==="granted"){NF.on=false;ntSave();chkAlerts();return}
+ let p=Notification.permission;if(p!=="granted"){try{p=await Notification.requestPermission()}catch(e){}}
+ NF.on=p==="granted";ntSave();if(NF.on){ntShow("🔔 Alerts are on","You will see due-soon alerts when you open the tracker.")}chkAlerts()};
 function buildRem(){const st=new Date().toISOString().replace(/[-:]|\.\d{3}/g,""),t=YMD(new Date()),n8=k=>k.replace(/-/g,"");
  const e2=x=>String(x||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"),fold=l=>{let o="";while(l.length>73){o+=l.slice(0,73)+"\r\n ";l=l.slice(73)}return o+l};
  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Class Tracker//EN","CALSCALE:GREGORIAN"];let n=0;
@@ -469,7 +568,8 @@ function buildRem(){const st=new Date().toISOString().replace(/[-:]|\.\d{3}/g,""
   else{L.push("DTSTART;VALUE=DATE:"+n8(k),"SUMMARY:"+e2(sum),"DESCRIPTION:"+e2(desc));if(!task)al("-PT15H");al("PT8H")}
   L.push("END:VEVENT");n++};
  (S.exams||[]).filter(e=>!e.done&&e.date>=t).forEach(e=>ev(e.id,e.date,e.time,e.type+(e.code?" · "+e.code:"")+(e.title?" · "+e.title:""),e.pass||"",false));
- Object.keys(S.pri||{}).filter(k=>k>=t).forEach(k=>S.pri[k].filter(x=>!x.d).forEach(x=>ev(x.id,k,"","Priority: "+x.t,"Planned task",true)));
+ Object.keys(S.pri||{}).filter(k=>k>=t).forEach(k=>S.pri[k].filter(x=>!x.d).forEach(x=>ev(x.id,k,x.tm||"","Priority: "+x.t,x.n||"Planned task",true)));
+ try{thDue().filter(o=>o.k>=t).forEach(o=>ev("th"+o.id,o.k,o.tm||"",o.t,o.desc||"Thesis",o.task))}catch(e){}
  if(!n){alert("Nothing to remind you about yet. Add a deadline or a priority first.");return null}
  L.push("END:VCALENDAR");return new Blob([L.map(fold).join("\r\n")+"\r\n"],{type:"text/calendar"})}
 $("rem_b").onclick=async()=>{const b=buildRem();if(!b)return;const name="class-tracker-reminders.ics";let f=null;try{f=new File([b],name,{type:"text/calendar"})}catch(e){}
@@ -477,10 +577,11 @@ $("rem_b").onclick=async()=>{const b=buildRem();if(!b)return;const name="class-t
  if(ios&&f&&navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e&&e.name==="AbortError")return}}
  const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 {const ios=/iPhone|iPad/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);$("rem_h").textContent=ios?"After tapping, open the file and choose “Add All” to put the reminders in Calendar.":"Open the downloaded file to add the reminders to Calendar."}
+const PHT={R:"Regular holiday",S:"Special non-working day",W:"Special working day",D:"Davao City special non-working day"},PHH={"2026-03-16":["Araw ng Dabaw (Davao City)","D"],"2026-08-14":["Kadayawan (Davao City)","D"],"2026-01-01":["New Year’s Day","R"],"2026-02-17":["Chinese New Year","S"],"2026-02-25":["EDSA People Power Anniversary","W"],"2026-03-20":["Eid’l Fitr","R"],"2026-04-02":["Maundy Thursday","R"],"2026-04-03":["Good Friday","R"],"2026-04-04":["Black Saturday","S"],"2026-04-09":["Araw ng Kagitingan","R"],"2026-05-01":["Labor Day","R"],"2026-05-27":["Eid’l Adha","R"],"2026-06-12":["Independence Day","R"],"2026-08-21":["Ninoy Aquino Day","S"],"2026-08-31":["National Heroes Day","R"],"2026-11-01":["All Saints’ Day","S"],"2026-11-02":["All Souls’ Day","S"],"2026-11-30":["Bonifacio Day","R"],"2026-12-08":["Immaculate Conception","S"],"2026-12-24":["Christmas Eve","S"],"2026-12-25":["Christmas Day","R"],"2026-12-30":["Rizal Day","R"],"2026-12-31":["Last Day of the Year","S"],"2027-01-01":["New Year’s Day","R"],"2027-02-06":["Chinese New Year","S"],"2027-02-25":["EDSA People Power Anniversary","W"],"2027-03-25":["Maundy Thursday","R"],"2027-03-26":["Good Friday","R"],"2027-03-27":["Black Saturday","S"],"2027-04-09":["Araw ng Kagitingan","R"],"2027-05-01":["Labor Day","R"],"2027-06-12":["Independence Day","R"],"2027-08-21":["Ninoy Aquino Day","S"],"2027-08-30":["National Heroes Day","R"],"2027-11-01":["All Saints’ Day","S"],"2027-11-02":["All Souls’ Day","S"],"2027-11-30":["Bonifacio Day","R"],"2027-12-08":["Immaculate Conception","S"],"2027-12-24":["Christmas Eve","S"],"2027-12-25":["Christmas Day","R"],"2027-12-30":["Rizal Day","R"],"2027-12-31":["Last Day of the Year","S"]};
 const SCH={"2026-08-10":"Classes start","2026-08-28":"1st Exam","2026-09-11":"2nd Exam","2026-09-25":"3rd Exam","2026-10-08":"Finals","2026-10-09":"Finals","2026-10-13":"2nd Term starts","2026-10-30":"1st Exam","2026-11-13":"2nd Exam","2026-11-27":"3rd Exam","2026-12-18":"Finals","2026-12-19":"Finals","2027-01-11":"Classes start","2027-01-29":"1st Exam","2027-02-12":"2nd Exam","2027-02-26":"3rd Exam","2027-03-11":"Finals","2027-03-12":"Finals","2027-03-16":"2nd Term starts","2027-04-02":"1st Exam","2027-04-16":"2nd Exam","2027-04-30":"3rd Exam","2027-05-13":"Finals","2027-05-14":"Finals","2027-06-18":"Prelim Exam","2027-07-02":"Midterm Exam","2027-07-15":"Final Exam","2027-07-16":"Final Exam"};
 const EVC={Exam:"#d64545",Quiz:"#e8913a",Assignment:"#3b7dd8","Final requirement":"#8e5bd0",Deadline:"#b0446a"};
 let CV=new Date(new Date().getFullYear(),new Date().getMonth(),1),CS=YMD(new Date()),PD=YMD(new Date());
-function evsOn(k){return[...(S.exams||[]).filter(e=>e.date===k).map(e=>({t:(e.code?e.code+" ":"")+(e.title||e.type),c:EVC[e.type]||"#b0446a",done:e.done,ck:"d:"+e.id})),...((S.pri||{})[k]||[]).map(x=>({t:x.t,c:"#2e9e6b",done:x.d,ck:"p:"+k+":"+x.id})),...(SCH[k]&&S.sy==="2026-2027"?[{t:SCH[k],c:"#8b8b94"}]:[])]}
+function evsOn(k){return[...(S.exams||[]).filter(e=>e.date===k).map(e=>({t:(e.code?e.code+" ":"")+(e.title||e.type),c:EVC[e.type]||"#b0446a",done:e.done,ck:"d:"+e.id})),...((S.pri||{})[k]||[]).map(x=>({t:x.t,h:[x.tm?"🕒 "+t12(x.tm):"",x.n?"📝 "+x.n:""].filter(Boolean).join(" · "),c:"#2e9e6b",done:x.d,ck:"p:"+k+":"+x.id})),...(PHH[k]?[{t:PHH[k][0],h:"🇵🇭 "+PHT[PHH[k][1]],c:"#b8860b"}]:[]),...(SCH[k]&&S.sy==="2026-2027"?[{t:SCH[k],c:"#8b8b94"}]:[])]}
 function renderCal(){if(!$("cal_g"))return;
  const y=CV.getFullYear(),m=CV.getMonth(),td=YMD(new Date()),f=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate();
  $("cal_t").textContent=CV.toLocaleDateString(undefined,{month:"long",year:"numeric"});
@@ -488,38 +589,58 @@ function renderCal(){if(!$("cal_g"))return;
  for(let d=1;d<=n;d++){const k=y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0"),ev=evsOn(k);
   h+=`<div data-cd="${k}" class="${k===td?"td ":""}${k===CS?"sl":""}"><span class="cn">${d}</span>${ev.slice(0,2).map(e=>`<div class="ch" style="background:${e.c}${e.done?";opacity:.45;text-decoration:line-through":""}">${esc(e.t)}</div>`).join("")}${ev.length>2?`<div class="cmo">+${ev.length-2} more</div>`:""}</div>`}
  $("cal_g").innerHTML=h;const ev=evsOn(CS);
- $("cal_d").innerHTML=`<b>${new Date(CS+"T00:00").toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})}</b>`+(ev.map(e=>`<div class="cl${e.done?" dn":""}">${e.ck?`<input type="checkbox" data-ck="${e.ck}"${e.done?" checked":""} style="width:auto;margin-top:3px">`:'<span style="width:18px"></span>'}<div class="sw" style="background:${e.c}"></div><div class="bd">${esc(e.t)}</div></div>`).join("")||'<div class="lbl" style="margin-top:4px">Nothing planned.</div>')}
+ $("cal_d").innerHTML=`<b>${new Date(CS+"T00:00").toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})}</b>`+(ev.map(e=>`<div class="cl${e.done?" dn":""}">${e.ck?`<input type="checkbox" data-ck="${e.ck}"${e.done?" checked":""} style="width:auto;margin-top:3px">`:'<span style="width:18px"></span>'}<div class="sw" style="background:${e.c}"></div><div class="bd">${esc(e.t)}${e.h?`<div class="lbl">${esc(e.h)}</div>`:""}</div>${e.ck?`<button class="dnb" data-ed="${e.ck}" title="Edit">✎</button>`:""}</div>`).join("")||'<div class="lbl" style="margin-top:4px">Nothing planned.</div>');cpLab()}
 $("cal_t").parentNode.onclick=ev=>{const t=ev.target.closest("[data-cm]");if(!t)return;const v=+t.dataset.cm;CV=v?new Date(CV.getFullYear(),CV.getMonth()+v,1):new Date(new Date().getFullYear(),new Date().getMonth(),1);if(!v)CS=YMD(new Date());renderCal()};
 $("cal_g").onclick=ev=>{const t=ev.target.closest("[data-cd]");if(t){CS=t.dataset.cd;renderCal()}};
 $("cal_d").onchange=ev=>{const c=ev.target.dataset.ck;if(!c)return;const q=c.split(":");
- if(q[0]==="d"){const e=(S.exams||[]).find(x=>x.id===q[1]);if(e)e.done=ev.target.checked}else{const x=((S.pri||{})[q[1]]||[]).find(z=>z.id===q[2]);if(x)x.d=ev.target.checked}
+ if(q[0]==="d"){const e=(S.exams||[]).find(x=>x.id===q[1]);if(e)e.done=ev.target.checked}else{const x=((S.pri||{})[q[1]]||[]).find(z=>z.id===q[2]);if(x){x.d=ev.target.checked;if(x.d)x.dAt=Date.now();else delete x.dAt}}
  save();renderStudy()};
-function renderPri(){if(!$("pr_l"))return;const t=YMD(new Date()),L=(S.pri||{})[PD]||[],dn=L.filter(x=>x.d).length;$("pr_d").value=PD;{const old=[];Object.keys(S.pri||{}).forEach(k=>{if(k<t)(S.pri[k]||[]).forEach(x=>{if(!x.d)old.push(x)})});$("pr_c").innerHTML=old.length?`<div class="eu"><span>↪ ${old.length} unfinished from earlier days</span><button id="pr_mv">Move to today</button></div>`:""}
+function renderPri(){if(!$("pr_l"))return;const t=YMD(new Date()),L=((S.pri||{})[PD]||[]).slice().sort((a,b)=>(a.tm||"99:99").localeCompare(b.tm||"99:99")),dn=L.filter(x=>x.d).length,nw=Date.now(),VL=L.filter(x=>!x.d||SD||(x.dAt&&nw-x.dAt<10000));$("pr_d").value=PD;clearTimeout(pT);{const f=L.filter(x=>x.d&&x.dAt&&nw-x.dAt<10000);if(f.length&&!SD)pT=setTimeout(renderPri,Math.min(...f.map(x=>10000-(nw-x.dAt)))+60)}{const old=[];Object.keys(S.pri||{}).forEach(k=>{if(k<t)(S.pri[k]||[]).forEach(x=>{if(!x.d)old.push(x)})});$("pr_c").innerHTML=old.length?`<div class="eu"><span>↪ ${old.length} unfinished from earlier days</span><button id="pr_mv">Move to today</button></div>`:""}
  $("pr_t").textContent=PD===t?"Today’s priorities":"Priorities · "+new Date(PD+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
- $("pr_l").innerHTML=L.map(x=>`<div class="cl${x.d?" dn":""}"><input type="checkbox" data-pk="${x.id}"${x.d?" checked":""} style="width:auto;margin-top:3px"><div class="bd">${esc(x.t)}<div class="mt2">Planned for ${PD===t?"today":PD===YMD(new Date(Date.now()+864e5))?"tomorrow":new Date(PD+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}</div></div><button class="dnb" data-px="${x.id}" title="Delete">✕</button></div>`).join("")||'<div class="lbl">Nothing planned yet.</div>';
- $("pr_s").textContent=L.length?dn+" of "+L.length+" done"+(L.length>5?" · that’s a lot, try to keep it to 5":""):""}
+ $("pr_l").innerHTML=VL.map(x=>`<div class="cl${x.d?" dn":""}"><input type="checkbox" data-pk="${x.id}"${x.d?" checked":""} style="width:auto;margin-top:3px"><div class="bd">${esc(x.t)}${x.tm?` <span class="lbl">🕒 ${t12(x.tm)}</span>`:""}${x.n?`<div class="mt2">📝 ${esc(x.n)}</div>`:""}<div class="mt2">Planned for ${PD===t?"today":PD===YMD(new Date(Date.now()+864e5))?"tomorrow":new Date(PD+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}</div></div><button class="dnb" data-ed="p:${PD}:${x.id}" title="Edit">✎</button> <button class="dnb" data-px="${x.id}" title="Delete">✕</button></div>`).join("")||(L.length?'<div class="lbl">All done 🎉</div>':'<div class="lbl">Nothing planned yet.</div>');
+ $("pr_s").innerHTML=L.length?dn+" of "+L.length+" done"+(L.length>5?" · that’s a lot, try to keep it to 5":"")+(dn?` · <a href="#" id="pr_sh">${SD?"Hide":"Show"} done</a>`:""):""}
+$("pr_s").onclick=ev=>{if(ev.target.id==="pr_sh"){ev.preventDefault();SD=!SD;renderPri()}};
 $("pr_c").onclick=ev=>{if(!ev.target.closest("#pr_mv"))return;const t=YMD(new Date());Object.keys(S.pri).forEach(k=>{if(k<t){const keep=[];S.pri[k].forEach(x=>{if(x.d)keep.push(x);else(S.pri[t]=S.pri[t]||[]).push(x)});S.pri[k]=keep}});PD=t;priUp()};
 const priUp=()=>{save();renderPri();renderCal();renderOv()};
 $("pr_d").onchange=()=>{PD=$("pr_d").value||YMD(new Date());renderPri()};
-const priAdd=()=>{const v=$("pr_i").value.trim();if(!v)return;if(!S.pri)S.pri={};(S.pri[PD]=S.pri[PD]||[]).push({id:"p"+Date.now(),t:v,d:false});$("pr_i").value="";priUp()};
-$("pr_a").onclick=priAdd;$("pr_i").onkeydown=e=>{if(e.key==="Enter")priAdd()};
-$("pr_l").onchange=ev=>{const id=ev.target.dataset.pk;const x=((S.pri||{})[PD]||[]).find(z=>z.id===id);if(x){x.d=ev.target.checked;priUp()}};
-$("pr_l").onclick=ev=>{const t=ev.target.closest("[data-px]");if(t){S.pri[PD]=(S.pri[PD]||[]).filter(z=>z.id!==t.dataset.px);priUp()}};
+const priAdd=()=>{const v=$("pr_i").value.trim();if(!v)return;if(!S.pri)S.pri={};(S.pri[PD]=S.pri[PD]||[]).push({id:"p"+Date.now(),t:v,tm:$("pr_tm").value||"",n:$("pr_n").value.trim(),d:false});$("pr_i").value="";$("pr_tm").value="";$("pr_n").value="";priUp()};
+$("pr_a").onclick=priAdd;$("pr_i").onkeydown=e=>{if(e.key==="Enter")priAdd()};$("pr_n").onkeydown=e=>{if(e.key==="Enter")priAdd()};
+$("pr_l").onchange=ev=>{const id=ev.target.dataset.pk;const x=((S.pri||{})[PD]||[]).find(z=>z.id===id);if(x){x.d=ev.target.checked;if(x.d)x.dAt=Date.now();else delete x.dAt;priUp()}};
+$("pr_l").onclick=ev=>{const ed=ev.target.closest("[data-ed]");if(ed){editItem(ed.dataset.ed);return}const t=ev.target.closest("[data-px]");if(t){S.pri[PD]=(S.pri[PD]||[]).filter(z=>z.id!==t.dataset.px);priUp()}};
 $("hfb").onclick=()=>{S.hf=!S.hf;save();render()};
+function pnUi(){const t=S.ntfy||"",id=SY.id||"";if(!$("pn_s"))return;$("pn_s").innerHTML=t?`<b>Topic:</b> <code>${esc(t)}</code><br><b>Gist ID:</b> <code>${id?esc(id):"turn on cloud sync first"}</code>`:"No topic yet. Tap “Create my notification topic”.";$("pn_c").textContent=t?"Make a new topic":"Create my notification topic"}
+const pnCopy=(v,what)=>{if(!v){$("pn_h").textContent="Nothing to copy yet.";return}const ok=()=>{$("pn_h").textContent=what+" copied."};try{navigator.clipboard.writeText(v).then(ok,()=>{prompt("Copy this:",v)})}catch(e){prompt("Copy this:",v)}};
+$("pn_c").onclick=()=>{if(S.ntfy&&!confirm("Make a new topic? You will have to subscribe to the new one in the ntfy app."))return;let a;try{a=Array.from(crypto.getRandomValues(new Uint8Array(14)))}catch(e){a=Array.from({length:14},()=>Math.floor(Math.random()*256))}
+ S.ntfy="gwa-"+a.map(b=>"abcdefghijklmnopqrstuvwxyz0123456789"[b%36]).join("");save();pnUi();$("pn_h").textContent="Topic created. Subscribe to it in the ntfy app."};
+$("pn_ct").onclick=()=>pnCopy(S.ntfy,"Topic");$("pn_cg").onclick=()=>pnCopy(SY.id,"Gist ID");
+$("pn_t").onclick=async()=>{if(!S.ntfy){$("pn_h").textContent="Create your topic first.";return}$("pn_h").textContent="Sending…";
+ try{const r=await fetch("https://ntfy.sh",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({topic:S.ntfy,title:"✅ Test from your tracker",message:"If you can read this, push notifications reach your phone.",tags:["tada"],priority:3})});$("pn_h").textContent=r.ok?"Sent. Check your phone (you must be subscribed to the topic in the ntfy app).":"ntfy answered "+r.status+". Try again."}catch(e){$("pn_h").textContent="Could not reach ntfy.sh. Check your connection."}};
+function cpLab(){const b=$("cp_b");if(b)b.textContent="＋ Add priority · "+new Date(CS+"T00:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})}
+$("cp_b").onclick=()=>{$("cp_f").hidden=!$("cp_f").hidden;if(!$("cp_f").hidden)$("cp_t").focus()};
+$("cp_x").onclick=()=>{$("cp_f").hidden=true};
+const cpAdd=()=>{const v=$("cp_t").value.trim();if(!v){$("cp_t").focus();return}if(!S.pri)S.pri={};(S.pri[CS]=S.pri[CS]||[]).push({id:"p"+Date.now(),t:v,tm:$("cp_tm").value||"",n:$("cp_n").value.trim(),d:false});$("cp_t").value="";$("cp_tm").value="";$("cp_n").value="";$("cp_f").hidden=true;priUp()};
+$("cp_a").onclick=cpAdd;$("cp_t").onkeydown=e=>{if(e.key==="Enter")cpAdd()};$("cp_n").onkeydown=e=>{if(e.key==="Enter")cpAdd()};
+{let DD={};try{DD=JSON.parse(localStorage.getItem("gwa-her-dd")||"{}")}catch(e){}
+["dd_sch","dd_cls"].forEach(i=>{const d=$(i);if(d&&DD[i]===false)d.open=false});
+document.addEventListener("toggle",ev=>{const d=ev.target;if(d&&(d.id==="dd_sch"||d.id==="dd_cls")){DD[d.id]=d.open;try{localStorage.setItem("gwa-her-dd",JSON.stringify(DD))}catch(e){}}},true)}
+
 const QS=["Small steps every day still get you to the finish line.","You don’t have to be perfect. You just have to keep going.","Future you is counting on what you do today.","Hard now, proud later.","One more page, one more problem, one step closer.","Progress is progress, no matter how small.","Rest if you must, but don’t quit.","Every engineer you admire once struggled with the same subjects.","Discipline carries you on the days motivation doesn’t.","Stay curious. Stay consistent. Stay kind to yourself.","A bad grade is feedback, not a verdict.","Build your future the way you build a structure: one solid layer at a time.","You’ve survived every tough day so far. Keep that record going.","Show up today. That’s already half the work.","Done is better than perfect. Start the plate, then finish the plate.","Don’t wait for the perfect time. Start with the time you have.","You’re closer to graduation than you were yesterday.","Study now, celebrate later.","Little by little, the load gets lighter.","Focus on the next task, not the whole mountain.","Take a break, drink some water, then get back to it.","You’ve handled harder things than this."];
 let QI=Math.floor(Math.random()*QS.length);const showQ=()=>{$("ov_q").textContent="“"+QS[QI]+"”"};showQ();
 $("ov_qn").onclick=()=>{let n;do{n=Math.floor(Math.random()*QS.length)}while(n===QI);QI=n;showQ()};
 $("ov_qd").onclick=()=>qOpen("d");$("ov_qa").onclick=()=>qOpen("a");$("q_x").onclick=qClose;
-$("q_b").onclick=ev=>{const t=ev.target.closest("[data-qa]");if(!t)return;const c=CL().find(x=>x.id===t.dataset.qa);if(c){c.abs=(c.abs||0)+1;save();renderStudy();qOpen("a")}};
-$("q_s").onclick=()=>{const d=$("q_date").value;if(!d){alert("Please choose a date.");return}
+$("q_b").onclick=ev=>{const t=ev.target.closest("[data-qa]");if(!t)return;const c=CL().find(x=>x.id===t.dataset.qa);if(c){c.abs=(c.abs||0)+1;(c.absLog=c.absLog||[]).push({id:"a"+Date.now(),d:YMD(new Date()),r:""});save();renderStudy();qOpen("a")}};
+$("q_s").onclick=()=>{const qm=$("q_b").dataset.m;if(qm==="e"){saveEdit();return}if(qm==="ea"){saveAbs();return}const d=$("q_date").value;if(!d){alert("Please choose a date.");return}
  if(!S.exams)S.exams=[];S.exams.push({id:"x"+Date.now(),code:$("q_sub").value,type:$("q_type").value,pass:$("q_pass").value,title:$("q_title").value.trim(),date:d,time:"",done:false});
  save();renderStudy();qClose()}
 $("x_add").onclick=()=>{const d=$("x_date").value;if(!d){alert("Please choose a date.");return}
  if(!S.exams)S.exams=[];S.exams.push({id:"x"+Date.now(),code:$("x_sub").value,type:$("x_type").value,pass:$("x_pass").value,title:$("x_title").value.trim(),date:d,time:$("x_time").value,done:false});
  $("x_title").value="";save();renderStudy()};
 $("tab-st").onclick=ev=>{const t=ev.target.closest("button");if(!t)return;const d=t.dataset;
+ if(d.ed){editItem(d.ed);return}
  if(d.xx){S.exams=(S.exams||[]).filter(e=>e.id!==d.xx);save();renderStudy();return}
- const c=(d.am||d.ap)?CL().find(x=>x.id===(d.am||d.ap)):null;if(c){c.abs=Math.max(0,(c.abs||0)+(d.ap?1:-1));save();renderStudy()}};
+ if(d.adl){const q=d.adl.split(":"),c=CL().find(x=>x.id===q[0]);if(c){c.absLog=(c.absLog||[]).filter(x=>x.id!==q[1]);c.abs=Math.max(0,(c.abs||0)-1);save();renderStudy()}return}
+ if(d.ap){absOpen(d.ap);return}
+ if(d.am){const c=CL().find(x=>x.id===d.am);if(c){const L=c.absLog||[];if(L.length)L.pop();c.abs=Math.max(0,(c.abs||0)-1);save();renderStudy()}}};
 $("tab-st").onchange=ev=>{const t=ev.target,d=t.dataset;
  if(d.xd){const e=(S.exams||[]).find(x=>x.id===d.xd);if(e){e.done=t.checked;save();renderStudy()}}
  else if(d.al){const c=CL().find(x=>x.id===d.al);if(c){c.lim=t.value===""?null:Math.max(0,+t.value);save();renderStudy()}}};
@@ -641,13 +762,14 @@ $("csv").onclick=()=>{
  const sj=find($("f_desc").value),code=sj?sj[0]:"",desc=sj?dsc(sj[1]):"",u=sj?sj[2]:NaN,s=$("f_s").value,e=$("f_e").value;
  if(!sj){alert("Please choose a subject from the list.");return}
  if((s&&!e)||(!s&&e)||(s&&e&&mins(e)<=mins(s))){alert("Please enter a start time and an end time that is later than the start.");return}
- const o={id:EC||"c"+Date.now(),sec:$("f_sec").value.trim(),code,desc,u,term:$("f_term").value,days:DC[$("f_dc").value]?DC[$("f_dc").value].slice():[],dc:DCL[$("f_dc").value]||"",s,e,room:$("f_room").value.trim(),done:$("f_done").checked,link:nl($("f_link").value),note:$("f_note").value.trim()};{const od=CL().find(x=>x.id===o.id);if(od){o.abs=od.abs;o.rq=od.rq}}
+ const o={id:EC||"c"+Date.now(),sec:$("f_sec").value.trim(),code,desc,u,term:$("f_term").value,days:DC[$("f_dc").value]?DC[$("f_dc").value].slice():[],dc:DCL[$("f_dc").value]||"",s,e,room:$("f_room").value.trim(),done:$("f_done").checked,link:nl($("f_link").value),note:$("f_note").value.trim()};{const od=CL().find(x=>x.id===o.id);if(od){o.abs=od.abs;o.rq=od.rq;o.absLog=od.absLog;o.lim=od.lim}}
  const cf=confl(o,CL());
  if(cf.length&&!confirm("This class overlaps with:\n"+cf.map(q=>"• "+q.code+" · "+q.desc+" ("+q.days.join(" ")+" "+t12(q.s)+"–"+t12(q.e)+")").join("\n")+"\n\nSave it anyway?"))return;
  const cl=CL(),i=cl.findIndex(x=>x.id===o.id);if(i>=0)cl[i]=o;else cl.push(o);{const q=find(code);if(q&&stOf(q)==="none"&&!lkOf(code,"none"))S.st[code]="prog"}
  $("cov").classList.remove("on");save();render()};
 let TB="ov";try{TB=localStorage.getItem("gwa-her-tab2")||"ov"}catch(e){}
-function tab(t){if(!["ov","sch","st","eu","pg"].includes(t))t="ov";TB=t;try{localStorage.setItem("gwa-her-tab2",t)}catch(e){}
+$("hnm").onclick=()=>{const v=prompt("Your full name:",S.nm||"");if(v!==null){S.nm=v.trim();save();render()}};$("hid").onclick=()=>{const v=prompt("Your account number (optional):",S.ac||"");if(v!==null){S.ac=v.trim();save();render()}};
+function tab(t){if(!["ov","sch","st","eu","pg","th"].includes(t))t="ov";TB=t;try{localStorage.setItem("gwa-her-tab2",t)}catch(e){}
  document.querySelectorAll(".pn").forEach(p=>p.hidden=p.id!=="tab-"+t);document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t))}
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
 tab(TB);
@@ -672,12 +794,154 @@ const find=c=>D.flatMap(x=>x[1]).find(s=>s[0]===c);
 const Q=["One more down. Keep stacking them up.","Strong foundations are built one subject at a time.","That’s another beam in place. Keep building.","Progress isn’t loud, but look how far you’ve come.","Good work. Rest a little, then take on the next one.","Every completed subject is a load you no longer carry.","You’re closer to your license than you were yesterday.","Steady, patient work is how every great structure gets finished.","You earned this one. Be proud of it."];
 let tt;function toast(c){$("tq").innerHTML=`✅ <b>${c}</b> completed!<br><span>${Q[Math.floor(Math.random()*Q.length)]}</span>`;$("tq").classList.add("on");clearTimeout(tt);tt=setTimeout(()=>$("tq").classList.remove("on"),5000)}
 $("lt").onclick=()=>{const t=document.getElementById("gwa").textContent;celebrate(parseFloat(t))};
-$("hnm").onclick=()=>{const v=prompt("Your full name:",S.nm||"");if(v!==null){S.nm=v.trim();save();render()}};$("hid").onclick=()=>{const v=prompt("Your account number (optional):",S.ac||"");if(v!==null){S.ac=v.trim();save();render()}};
 $("as").innerHTML=opts(S.as);$("ysy").onchange=e=>{S.sy=e.target.value;save();render()};$("ytm").onchange=e=>{S.tm=e.target.value;save();render()};$("ysm").onchange=e=>{S.sm=e.target.value;save();render()};
 $("as").onchange=e=>{S.as=e.target.value;save();render()};
 $("rs").onclick=()=>{if(confirm("Clear all your edits?")){const t=S.theme;S={g:{},st:{},ex:false,as:"3",theme:t,cel:false};save();$("as").innerHTML=opts(S.as);render()}};
 {const p=curP(new Date()),k=YMD(new Date());if(p&&S.auto!==k){S.sy=p[2];S.sm=p[3];S.tm=p[4]==="2nd Term"?"2":"1";S.auto=k;try{save()}catch(e){}}}
-theme();render();cloud();
+
+/* ===== Thesis tab ===== */
+var THP="ov",THE=false,TH_EDIT=null,thTapT=[];
+try{THP=localStorage.getItem("gwa-her-thp")||"ov"}catch(e){}
+const thNew=()=>({ok:false,title:"",au:["","",""],adv:"",pn:["",""],stat:"",t:{1:[],2:[]}});
+const thId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const thU2=()=>{try{const x=find("BCE 415");return !!x&&stOf(x)==="done"}catch(e){return false}};
+const thN=i=>((S.th.au[i]||"").trim())||("Member "+(i+1));
+const thDays=d=>Math.round((new Date(d+"T00:00:00")-new Date(YMD(new Date())+"T00:00:00"))/864e5);
+const thLab=d=>{const n=thDays(d),t=new Date(d+"T00:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric"});return t+(n<0?" · "+(-n)+"d overdue":n===0?" · today":n===1?" · tomorrow":" · in "+n+"d")};
+function thP(p){THP=p;TH_EDIT=null;THX=null;try{localStorage.setItem("gwa-her-thp",p)}catch(e){}renderTh()}
+function thTap(){const n=Date.now();thTapT=thTapT.filter(x=>n-x<2500);thTapT.push(n);if(thTapT.length>=5){thTapT=[];THE=true;renderTh()}}
+function thCancelEd(){THE=false;renderTh()}
+function thSave(){const t=S.th,v=i=>($(i).value||"").trim();
+ t.title=v("th_title");t.au=[0,1,2].map(i=>v("th_a"+i));t.adv=v("th_adv");t.pn=[0,1].map(i=>v("th_p"+i));t.stat=v("th_st");
+ t.ok=true;THE=false;save();renderTh()}
+function thAdd(){const t=S.th,p=THP,x=($("tk_t").value||"").trim();if(!x){alert("Please type the task.");return}
+ const o={t:x,w:$("tk_w").value,d:$("tk_d").value||"",n:($("tk_n").value||"").trim()};
+ if(TH_EDIT){const e=t.t[p].find(y=>y.id===TH_EDIT.id);if(e)Object.assign(e,o)}else t.t[p].push(Object.assign({id:thId(),done:false},o));
+ TH_EDIT=null;save();renderTh()}
+function thTog(p,id){const e=S.th.t[p].find(y=>y.id===id);if(!e)return;e.done=!e.done;save();if(e.done)toast("Thesis task");renderTh()}
+function thDel(p,id){if(!confirm("Delete this task?"))return;S.th.t[p]=S.th.t[p].filter(y=>y.id!==id);if(TH_EDIT&&TH_EDIT.id===id)TH_EDIT=null;save();renderTh()}
+function thEd(p,id){TH_EDIT={id};renderTh();const e=$("tk_t");if(e)e.scrollIntoView({block:"center"})}
+function thCancel(){TH_EDIT=null;renderTh()}
+function thStats(p){const a=S.th.t[p],dn=a.filter(x=>x.done).length;return{n:a.length,dn,od:a.filter(x=>!x.done&&x.d&&thDays(x.d)<0).length}}
+function thInfo(){const t=S.th;
+ if(!t.ok||THE){const f=(l,id,v,c)=>`<div class="${c||"w"}"><label>${l}</label><input id="${id}" value="${esc(v)}"></div>`;
+  return `<div class="card"><h2>${t.ok?"Edit research details":"Set up your thesis"}</h2>${t.ok?"":'<div class="lbl">Fill this in once. After you save, it is locked and shown as read-only.</div>'}<div class="fm">${f("Research title","th_title",t.title)}${[0,1,2].map(i=>f("Proponent / author "+(i+1),"th_a"+i,t.au[i])).join("")}${f("Adviser","th_adv",t.adv)}${[0,1].map(i=>f("Panel member "+(i+1),"th_p"+i,t.pn[i],"")).join("")}${f("Statistician","th_st",t.stat)}</div><div class="row"><button onclick="thSave()">${t.ok?"Save changes":"Save &amp; lock"}</button>${t.ok?'<button class="g" onclick="thCancelEd()">Cancel</button>':""}</div></div>`}
+ const li=(l,v)=>`<div class="thr"><span class="lbl">${l}</span><b>${esc(v)||"—"}</b></div>`;
+ return `<div class="card"><div class="thT" style="margin-top:0;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none" onclick="thTap()">${esc(t.title)||"Untitled research"}</div><div class="thr"><span class="lbl">Proponents</span><b>${t.au.filter(x=>x.trim()).map(esc).join("<br>")||"—"}</b></div>${li("Adviser",t.adv)}<div class="thr"><span class="lbl">Panel</span><b>${t.pn.filter(x=>x.trim()).map(esc).join("<br>")||"—"}</b></div>${li("Statistician",t.stat)}</div>`}
+function thOv(){const t=S.th,pc=s=>s.n?Math.round(s.dn/s.n*100):0,s1=thStats(1),s2=thStats(2);
+ const card=(p,s)=>{const lk=p===2&&!thU2();return `<div class="card" style="margin:0;cursor:pointer" onclick="thP('${p}')"><div class="lbl">Thesis ${p} · CE Project ${p}</div>${lk?'<div class="big">🔒</div><div class="lbl" style="margin-top:6px">Opens after your BCE 415 grade is released</div>':`<div class="big">${pc(s)}%</div><div class="bar"><i style="width:${pc(s)}%"></i></div><div class="lbl" style="margin-top:6px">${s.dn}/${s.n} tasks done${s.od?` · <span class="ovd">${s.od} overdue</span>`:""}</div>`}</div>`};
+ const all=[...t.t[1],...(thU2()?t.t[2]:[])],wl=[0,1,2,"all"].map(i=>({n:i==="all"?"Everyone":thN(i),o:all.filter(x=>!x.done&&x.w===String(i)).length,d:all.filter(x=>x.done&&x.w===String(i)).length})).filter((r,i)=>i<3||r.o||r.d);
+ const up=(thU2()?[1,2]:[1]).flatMap(p=>t.t[p].filter(x=>!x.done&&x.d).map(x=>Object.assign({p},x))).sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:0).slice(0,6);
+ return `<div class="thg">${card(1,s1)}${card(2,s2)}</div>`+thGlance()+thInfo()+
+ `<div class="card"><h2>Who’s doing what</h2>${wl.map(r=>`<div class="thr"><span>${esc(r.n)}</span><span class="lbl">${r.o} open · ${r.d} done</span></div>`).join("")}</div>`+
+ `<div class="card"><h2>Coming up</h2>${up.length?up.map(x=>`<div class="thr"><span>${esc(x.t)} <span class="chip">T${x.p}</span></span><span class="${thDays(x.d)<0?"ovd":"lbl"}">${thLab(x.d)}</span></div>`).join(""):'<div class="lbl">No dated tasks yet. Add due dates in Thesis 1 or 2.</div>'}</div>`}
+function thList(p){if(p==="2"&&!thU2())return `<div class="card" style="text-align:center"><div class="em">🔒</div><h2>Thesis 2 is locked</h2><div class="lbl" style="font-size:14px">Thesis 2 is CE Project 2 (BCE 421). It opens after your grade for CE Project 1 (BCE 415) is released and passed. Set BCE 415 to Completed with its grade and this unlocks automatically.</div></div>`;
+ const t=S.th,a=t.t[p],s=thStats(p),e=TH_EDIT?a.find(y=>y.id===TH_EDIT.id):null,pc=s.n?Math.round(s.dn/s.n*100):0;
+ const row=x=>`<div class="thi${x.done?" dn":""}"><input type="checkbox" ${x.done?"checked":""} onchange="thTog('${p}','${x.id}')"><div style="flex:1;min-width:0"><div class="thx">${esc(x.t)}</div><div class="lbl">👤 ${x.w==="all"?"Everyone":esc(thN(+x.w))}${x.d?` · 📅 <span class="${!x.done&&thDays(x.d)<0?"ovd":""}">${thLab(x.d)}</span>`:""}${x.n?" · 📝 "+esc(x.n):""}</div></div><button class="g" onclick="thEd('${p}','${x.id}')" aria-label="Edit">✎</button><button class="g" onclick="thDel('${p}','${x.id}')" aria-label="Delete">✕</button></div>`;
+ const op=a.filter(x=>!x.done).sort((x,y)=>x.d&&y.d?(x.d<y.d?-1:x.d>y.d?1:0):x.d?-1:y.d?1:0),dn=a.filter(x=>x.done);
+ const opt=(v,l)=>`<option value="${v}"${e&&e.w===v||!e&&v==="all"?" selected":""}>${esc(l)}</option>`;
+ return (p==="2"?thCarryCard():"")+(t.ok?`<div class="card" style="padding:10px 14px;text-align:center"><span class="lbl">Research title</span><div style="font-weight:600">${esc(t.title)||"Untitled research"}</div></div>`:"")+
+ `<div class="card"><h2>Thesis ${p} · CE Project ${p} progress</h2><div class="bar lg"><i style="width:${pc}%"></i></div><div class="lbl" style="margin-top:6px">${s.dn} of ${s.n} tasks done (${pc}%)${s.od?` · <span class="ovd">${s.od} overdue</span>`:""}</div></div>`+
+ `<div class="card"><h2>${e?"Edit task":"Add a task"}</h2><div class="fm"><div class="w"><label>Task</label><input id="tk_t" value="${esc(e?e.t:"")}" placeholder="e.g. Finish Chapter 1 draft"></div><div><label>Assigned to</label><select id="tk_w">${opt("all","Everyone")}${[0,1,2].map(i=>opt(String(i),thN(i))).join("")}</select></div><div><label>Due date (optional)</label><input type="date" id="tk_d" value="${e&&e.d?e.d:""}"></div><div class="w"><label>Notes (optional)</label><input id="tk_n" value="${esc(e?e.n:"")}"></div></div><div class="row"><button onclick="thAdd()">${e?"Save task":"＋ Add task"}</button>${e?'<button class="g" onclick="thCancel()">Cancel</button>':""}</div></div>`+
+ `<div class="card"><h2>To do (${op.length})</h2>${op.length?op.map(row).join(""):'<div class="lbl">Nothing open. Add a task above.</div>'}</div>`+
+ (dn.length?`<details class="card"><summary style="cursor:pointer"><b>Done (${dn.length})</b></summary>${dn.map(row).join("")}</details>`:"")}
+function renderTh(){const B=$("th_body");if(!B)return;
+ if(!S.th)S.th=thNew();const t=S.th;if(!t.t)t.t={1:[],2:[]};if(!t.t[1])t.t[1]=[];if(!t.t[2])t.t[2]=[];if(!t.au)t.au=["","",""];if(!t.pn)t.pn=["",""];if(!t.x)t.x={};Object.keys(THS).forEach(k=>{if(!t.x[k])t.x[k]=[]});if(!t.ch)t.ch={};if(!t.fl)t.fl={};
+ if(!THPILL.some(x=>x[0]===THP))THP="ov";
+ $("th_pills").innerHTML=THPILL.map(x=>`<button class="g${x[0]===THP?" on":""}" onclick="thP('${x[0]}')">${x[0]==="2"&&!thU2()?"🔒 ":""}${x[1]}</button>`).join("");
+ const open=document.activeElement&&B.contains(document.activeElement);if(open&&document.activeElement.matches("input:not([type=checkbox]),select"))return;
+ B.innerHTML=THP==="ov"?thOv():THP==="1"||THP==="2"?thList(THP):THP==="ch"?thCh():thXPage(THP)}
+
+/* ===== Thesis extras: defense, chapters, comments, consults, tests, budget, links, submission ===== */
+const THPILL=[["ov","Overview"],["1","Thesis 1"],["2","Thesis 2"],["sub","📋 Submit"],["ch","📖 Chapters"],["con","🗣️ Consults"],["cmt","💬 Comments"],["def","🎤 Defense"],["bud","💰 Budget"],["lnk","🔗 Links"]];
+var THX=null;
+const thWho=()=>{const t=S.th,n=(r,v)=>v&&v.trim()?r+" · "+v.trim():r;return[["adv",n("Adviser",t.adv)],["p1",n("Panel 1",t.pn[0])],["p2",n("Panel 2",t.pn[1])],["st",n("Statistician",t.stat)],["ot","Other"]]};
+const thWhoL=k=>(thWho().find(o=>o[0]===k)||[0,k||"—"])[1];
+const thPay=()=>[0,1,2].map(i=>[String(i),thN(i)]);
+const thTHs=()=>thU2()?[["1","Thesis 1"],["2","Thesis 2"]]:[["1","Thesis 1"]];
+const THS={
+ def:{t:"Defense schedule",ic:"🎤",th:1,req:"d",f:[["ty","Defense","sel",0,["Title defense","Proposal defense","Final defense","Other"]],["d","Date","date"],["tm","Time","time"],["v","Venue","text"],["n","Notes","text",1]]},
+ cmt:{t:"Panel & adviser comments",ic:"💬",th:1,req:"c",chk:1,f:[["fr","From","sel",0,thWho],["c","Comment","text",1],["n","How we’ll fix it (optional)","text",1]]},
+ con:{t:"Consultation log",ic:"🗣️",th:1,req:"n",f:[["d","Date","date"],["wh","Met with","sel",0,thWho],["n","What we discussed","text",1],["nx","Next steps","text",1]]},
+ bud:{t:"Budget & expenses",ic:"💰",th:1,req:"i",f:[["i","Item","text",1],["a","Amount (₱)","number"],["by","Paid by","sel",0,thPay],["d","Date","date"]]},
+ lnk:{t:"Shared links",ic:"🔗",req:"u",f:[["l","Label","text"],["u","Link (https://…)","text",1]]},
+ sub:{t:"Other checklist items",ic:"📋",req:"i",chk:1,f:[["i","Item","text",1],["n","Notes (optional)","text",1]]}
+};
+const thOptH=(o,cur,pre)=>o.map(x=>{const v=Array.isArray(x)?x[0]:x,l=Array.isArray(x)?x[1]:x;return `<option value="${esc(v)}"${String(v)===String(cur)?" selected":""}>${esc(l)}</option>`}).join("");
+function thXForm(sc){const c=THS[sc],e=THX&&THX.sc===sc?S.th.x[sc].find(y=>y.id===THX.id):null,v=k=>e&&e[k]!=null?e[k]:"";
+ const fl=c.f.map(([k,l,ty,w,o])=>`<div class="${w?"w":""}"><label>${l}</label>${ty==="sel"?`<select id="x_${k}">${thOptH(typeof o==="function"?o():o,v(k))}</select>`:`<input id="x_${k}" type="${ty}" ${ty==="number"?'step="any" min="0" ':""}value="${esc(v(k))}">`}</div>`);
+ if(c.th)fl.splice(1,0,`<div><label>Thesis</label><select id="x_th">${thOptH(thTHs(),v("th")||"1")}</select></div>`);
+ return `<div class="card"><h2>${e?"Edit":"Add"} · ${c.t}</h2><div class="fm">${fl.join("")}</div><div class="row"><button onclick="thXSave('${sc}')">${e?"Save":"＋ Add"}</button>${e?`<button class="g" onclick="thXCancel()">Cancel</button>`:""}</div></div>`}
+function thXSave(sc){const c=THS[sc],t=S.th,o={};
+ c.f.forEach(([k,l,ty])=>{const el=$("x_"+k);o[k]=ty==="number"?(+el.value||0):(el.value||"").trim()});if(c.th)o.th=$("x_th").value;
+ if(!o[c.req]){alert("Please fill in: "+c.f.find(f=>f[0]===c.req)[1]);return}
+ if(sc==="lnk"){let u=o.u;if(/^[a-z][a-z0-9+.-]*:/i.test(u)&&!/^https?:/i.test(u)){alert("Only web links (https://…) are allowed.");return}if(!/^https?:/i.test(u))u="https://"+u;o.u=u}
+ const e=THX&&THX.sc===sc?t.x[sc].find(y=>y.id===THX.id):null;if(e)Object.assign(e,o);else t.x[sc].push(Object.assign({id:thId(),done:false},o));
+ THX=null;save();renderTh()}
+function thXEd(sc,id){THX={sc,id};renderTh();const f=$("x_"+THS[sc].f[0][0]);if(f)f.scrollIntoView({block:"center"})}
+function thXCancel(){THX=null;renderTh()}
+function thXDel(sc,id){if(!confirm("Delete this entry?"))return;S.th.x[sc]=S.th.x[sc].filter(y=>y.id!==id);if(THX&&THX.id===id)THX=null;save();renderTh()}
+function thXTog(sc,id){const e=S.th.x[sc].find(y=>y.id===id);if(!e)return;e.done=!e.done;save();if(e.done&&sc==="cmt")toast("Comment");renderTh()}
+function thSubSeed(){const t=S.th.x.sub;["Adviser signature on the routing form","Panel members’ signatures","Statistician’s certification","Similarity / plagiarism check","Hard-bound copies","Soft copy submitted","Clearance signed"].forEach(i=>t.push({id:thId(),done:false,i,n:""}));save();renderTh()}
+const thTg=x=>x.th?` · T${x.th}`:"";
+const thXRow={
+ def:x=>`<div class="thx">${esc(x.ty)}${thTg(x)}</div><div class="lbl">📅 ${x.d?thLab(x.d):"—"}${x.tm?" · 🕒 "+t12(x.tm):""}${x.v?" · 📍 "+esc(x.v):""}${x.n?" · 📝 "+esc(x.n):""}</div>`,
+ cmt:x=>`<div class="thx">${esc(x.c)}</div><div class="lbl">💬 ${esc(thWhoL(x.fr))}${thTg(x)}${x.n?" · 🛠 "+esc(x.n):""}</div>`,
+ con:x=>`<div class="thx">${esc(x.n)}</div><div class="lbl">📅 ${x.d?thLab(x.d).split(" · ")[0]:"—"} · 🗣️ ${esc(thWhoL(x.wh))}${thTg(x)}${x.nx?" · ➡️ "+esc(x.nx):""}</div>`,
+ bud:x=>`<div class="thx">${esc(x.i)} · ₱${(+x.a||0).toLocaleString()}</div><div class="lbl">👤 ${esc(thN(+x.by))}${x.d?" · 📅 "+thLab(x.d).split(" · ")[0]:""}${thTg(x)}</div>`,
+ lnk:x=>`<div class="thx"><a href="${esc(x.u)}" target="_blank" rel="noopener noreferrer">${esc(x.l||x.u)}</a></div><div class="lbl">${esc(x.u)}</div>`,
+ sub:x=>`<div class="thx">${esc(x.i)}</div>${x.n?`<div class="lbl">📝 ${esc(x.n)}</div>`:""}`
+};
+function thXSum(sc){const t=S.th,a=t.x[sc],td=YMD(new Date());
+ if(sc==="def"){const nx=a.filter(d=>d.d&&d.d>=td).sort((p,q)=>p.d<q.d?-1:p.d>q.d?1:0)[0];
+  return `<div class="card" style="text-align:center">${nx?`<div class="lbl">Next: ${esc(nx.ty)}</div><div class="big">${thDays(nx.d)===0?"Today":thDays(nx.d)+" day"+(thDays(nx.d)===1?"":"s")}</div><div class="lbl">${thLab(nx.d).split(" · ")[0]}${nx.tm?" · "+t12(nx.tm):""}</div>`:'<div class="lbl">No upcoming defense scheduled yet.</div>'}</div>`}
+ if(sc==="cmt"){const o=a.filter(x=>!x.done);return `<div class="card"><h2>${o.length} open · ${a.length-o.length} fixed</h2>${thWho().map(([k,l])=>{const n=o.filter(x=>x.fr===k).length;return n?`<div class="thr"><span>${esc(l)}</span><span class="lbl">${n} open</span></div>`:""}).join("")}</div>`}
+ if(sc==="bud"){const tot=a.reduce((s,b)=>s+(+b.a||0),0),sh=tot/3;return `<div class="card"><h2>Total spent: ₱${tot.toLocaleString(undefined,{maximumFractionDigits:2})}</h2><div class="lbl">Equal share: ₱${sh.toLocaleString(undefined,{maximumFractionDigits:2})} each</div>${[0,1,2].map(i=>{const pd=a.filter(b=>b.by===String(i)).reduce((s,b)=>s+(+b.a||0),0),bl=pd-sh;return `<div class="thr"><span>${esc(thN(i))} <span class="lbl">paid ₱${pd.toLocaleString()}</span></span><span class="${bl<-0.005?"ovd":"lbl"}">${Math.abs(bl)<0.005?"settled":bl>0?"gets back ₱"+bl.toLocaleString(undefined,{maximumFractionDigits:2}):"owes ₱"+(-bl).toLocaleString(undefined,{maximumFractionDigits:2})}</span></div>`}).join("")}</div>`}
+ if(sc==="sub")return thFlow();
+ return ""}
+function thXPage(sc){const c=THS[sc],t=S.th;if(!c)return "";let a=t.x[sc].slice();
+ if(sc==="def")a.sort((p,q)=>p.d&&q.d?(p.d<q.d?-1:p.d>q.d?1:0):p.d?-1:q.d?1:0);
+ else if(sc==="con"||sc==="tst")a.sort((p,q)=>(q.d||"")<(p.d||"")?-1:(q.d||"")>(p.d||"")?1:0);
+ else if(sc==="cmt")a.sort((p,q)=>(p.done?1:0)-(q.done?1:0));
+ const row=x=>`<div class="thi${x.done?" dn":""}">${c.chk?`<input type="checkbox" ${x.done?"checked":""} onchange="thXTog('${sc}','${x.id}')">`:""}<div style="flex:1;min-width:0">${thXRow[sc](x)}</div><button class="g" onclick="thXEd('${sc}','${x.id}')" aria-label="Edit">✎</button><button class="g" onclick="thXDel('${sc}','${x.id}')" aria-label="Delete">✕</button></div>`;
+ return thXSum(sc)+thXForm(sc)+`<div class="card"><h2>${c.ic} ${c.t} (${a.length})</h2>${a.length?a.map(row).join(""):'<div class="lbl">Nothing here yet. Add one above.</div>'}</div>`}
+const CHA=[["1","Chapter 1 · Introduction",1],["2","Chapter 2 · Review of Related Literature",1],["3","Chapter 3 · Methodology",1],["4","Chapter 4 · Results and Discussion",2],["5","Chapter 5 · Summary, Conclusions and Recommendations",2]],CHS=[["none","Not started",0],["draft","Drafting",.25],["adv","With adviser",.5],["rev","Revised",.75],["fin","Final",1]];
+const thChPct=()=>Math.round(CHA.reduce((s,c)=>s+(CHS.find(x=>x[0]===(S.th.ch[c[0]]||"none"))||[0,0,0])[2],0)/CHA.length*100);
+function thChSet(n,v){S.th.ch[n]=v;save();renderTh()}
+function thCh(){const u=thU2(),pc=thChPct();
+ return `<div class="card"><h2>📖 Manuscript progress: ${pc}%</h2><div class="bar lg"><i style="width:${pc}%"></i></div><div class="lbl" style="margin-top:6px">Chapters 1 to 3 belong to Thesis 1. Chapters 4 and 5 open with Thesis 2.</div></div>`+
+ `<div class="card">${CHA.map(([n,l,tt])=>{const lk=tt===2&&!u,cur=S.th.ch[n]||"none";return `<div class="thi"><div style="flex:1;min-width:0"><div class="thx">${lk?"🔒 ":""}${l}</div><div class="lbl">Thesis ${tt}</div></div>${lk?'<span class="lbl">Locked</span>':`<select onchange="thChSet('${n}',this.value)">${CHS.map(x=>`<option value="${x[0]}"${x[0]===cur?" selected":""}>${x[1]}</option>`).join("")}</select>`}</div>`}).join("")}</div>`}
+function thGlance(){const t=S.th,x=t.x,td=YMD(new Date());
+ const nx=x.def.filter(d=>d.d&&d.d>=td).sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:0)[0],spent=x.bud.reduce((s,b)=>s+(+b.a||0),0),sd=x.sub.filter(i=>i.done).length;
+ const r=(l,v,k)=>`<div class="thr" style="cursor:pointer" onclick="thP('${k}')"><span class="lbl">${l}</span><b>${v}</b></div>`;
+ return `<div class="card"><h2>At a glance</h2>${r("Next defense",nx?esc(nx.ty)+" · "+thLab(nx.d):"Not scheduled","def")}${r("Manuscript",thChPct()+"% overall","ch")}${r("Open comments",x.cmt.filter(c=>!c.done).length,"cmt")}${r("Thesis process",thFlowSum(),"sub")}${r("Total spent","₱"+spent.toLocaleString(undefined,{maximumFractionDigits:2}),"bud")}</div>`}
+function thCarryCard(){const n=S.th.t[1].filter(x=>!x.done).length;return n?`<div class="card"><h2>Carry over from Thesis 1</h2><div class="lbl">${n} unfinished Thesis 1 task${n===1?"":"s"} can move here.</div><div class="row"><button onclick="thCarry()">Move ${n} task${n===1?"":"s"} to Thesis 2</button></div></div>`:""}
+function thCarry(){const t=S.th,o=t.t[1].filter(x=>!x.done);if(!o.length||!confirm("Move "+o.length+" unfinished task(s) from Thesis 1 to Thesis 2?"))return;t.t[2]=t.t[2].concat(o);t.t[1]=t.t[1].filter(x=>x.done);save();renderTh()}
+function thDue(){const t=S.th;if(!t||!t.t)return[];const o=[],u=thU2(),ti=i=>"T"+i;
+ [1,2].forEach(p=>{if(p===2&&!u)return;(t.t[p]||[]).forEach(x=>{if(!x.done&&x.d)o.push({id:x.id,k:x.d,tm:"",t:"Thesis "+p+" · "+x.t+(x.w==="all"?"":" ("+thN(+x.w)+")"),desc:x.n||"Thesis task",task:true})})});
+ ((t.x&&t.x.def)||[]).forEach(x=>{if(x.d)o.push({id:x.id,k:x.d,tm:x.tm||"",t:"🎤 "+x.ty+(x.th?" · T"+x.th:""),desc:x.v?"Venue: "+x.v:"Thesis defense",task:false,nov:true})});return o}
+
+const THFL=[
+["1","Approved thesis title",[["1a","Thesis title approved through the program’s review process",1]]],
+["2","Assignment of research personnel (by the Research Coordinator)",[["2a","Research Adviser assigned"],["2b","Statistician assigned"],["2c","Panel members assigned (for proposal and defense)"],["2d","Form 2.1: Assignment of Research Personnel Form, signed by the Research Coordinator"],["2e","Form 2.2: Acceptance Form, accomplished and signed by the Research Adviser"],["2f","Form 2.2: Acceptance Form, signed by the Statistician"],["2g","Form 2.2: Acceptance Form, signed by the Panel Members"]]],
+["3","Go to the research personnel for manuscript guidance (up to Chapter 2)",[["3a","Meet the assigned Research Adviser for manuscript guidance"],["3b","Meet the assigned Statistician for manuscript guidance"]]],
+["4","Check the Google Drive (provided by the Research Coordinator) for required forms",[["4a","Open the Google Drive folder from the Research Coordinator"],["4b","Download the latest templates and forms"]]],
+["5","Parallel activities (done at the same time)",[["5a","A. Prepare the outline proposal manuscript (prescribed format and guidelines)"],["5b","B. Consult the thesis adviser (content, direction, objectives, scope, methodology)"],["5c","C. Consult the statistician (statistical methods and tools, data analysis and presentation)"]]],
+["6","Develop the manuscript up to Part II: Materials and Methods",[["6a","Complete the manuscript up to Part II: Materials and Methods (Chapters 1 and 2)"],["6b","Check clarity, completeness and required format with the Adviser and Statistician"]]],
+["7","Prepare the endorsement for outline defense",[["7a","Prepare the endorsement for outline defense using the prescribed form"]]],
+["8","Secure signatures on the endorsement form",[["8a","Research Adviser’s signature"],["8b","Research Subject Teacher’s signature"]]],
+["End","Ready for outline defense",[["9a","Submit the endorsed manuscript and supporting documents to the Research Coordinator"],["9b","Wait for the outline defense schedule to be emailed"]]]];
+const thFlI=i=>S.th.fl[i[0]]!==undefined?!!S.th.fl[i[0]]:!!i[2];
+function thFlState(){let cur=null,dn=0,tot=0;THFL.forEach(s=>{const d=s[2].filter(thFlI).length;dn+=d;tot+=s[2].length;if(cur===null&&d<s[2].length)cur=s[0]});return{cur,dn,tot}}
+function thFlowSum(){const f=thFlState();return f.cur?(f.cur==="End"?"Final step":"Step "+f.cur+" of 8")+" · "+f.dn+"/"+f.tot+" done":"Ready for outline defense"}
+function thFlTog(id){const st=THFL.find(x=>x[2].some(i=>i[0]===id)),it=st[2].find(i=>i[0]===id),was=st[2].every(thFlI);S.th.fl[id]=!thFlI(it);save();if(!was&&st[2].every(thFlI))toast(st[0]==="End"?"Final step":"Step "+st[0]);renderTh()}
+function thFlow(){const f=thFlState(),pc=f.tot?Math.round(f.dn/f.tot*100):0;
+ return `<div class="card"><h2>📋 Thesis process checklist</h2><div class="lbl">From approved title to outline defense</div><div class="bar lg" style="margin-top:8px"><i style="width:${pc}%"></i></div><div class="lbl" style="margin-top:6px">${f.dn} of ${f.tot} done (${pc}%) · ${f.cur?(f.cur==="End"?"last step: submit and wait for the schedule":"you are on <b>step "+f.cur+"</b>"):"ready for the outline defense! 🎉"}</div></div>`+
+ THFL.map(([n,t,a])=>{const d=a.filter(thFlI).length,full=d===a.length,cur=f.cur===n;
+  return `<div class="card" style="${cur?"border:2px solid var(--ac)":""}"><div class="thr" style="border:0;padding-top:0"><b style="text-align:left">${full?"✅":cur?"👉":"⬜"} ${n==="End"?"End":"Step "+n} · ${t}</b><span class="lbl">${d}/${a.length}</span></div>${cur?'<div class="lbl" style="margin-bottom:4px">You are here</div>':""}${a.map(i=>`<label class="thi${thFlI(i)?" dn":""}" style="cursor:pointer"><input type="checkbox" ${thFlI(i)?"checked":""} onchange="thFlTog('${i[0]}')"><div class="thx" style="font-weight:500">${i[1]}</div></label>`).join("")}</div>`}).join("")}
+/* ===== end Thesis extras ===== */
+/* ===== end Thesis tab ===== */
+theme();render();bakUi();cloud();
 addEventListener("online",cloud);document.addEventListener("visibilitychange",()=>{if(!document.hidden)cloud()});
 if("serviceWorker"in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script></body></html>
