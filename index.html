@@ -62,7 +62,7 @@ input[type=text],input[type=number],input[type=time],input:not([type]){font:inhe
 .cl{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--ln);border-radius:12px;padding:10px;margin:8px 0}
 .cl .tm{min-width:92px;font-weight:700;font-size:13px}.cl .tm small{display:block;font-weight:400;color:var(--mu)}
 .cl .sw{width:6px;align-self:stretch;border-radius:4px;flex:none}
-.cl .bd{flex:1}.cl .bd b{display:block}.cl .mt2{font-size:12px;color:var(--mu);margin-top:2px}
+.cl .bd{flex:1}.cl .bd b{display:block}.cl .mt2{font-size:12px;color:var(--mu);margin-top:2px}.cl .ch{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:6px}.cl .cs{font-weight:700;font-size:15px;color:var(--ac)}.cl .cc{font-size:17px;margin-top:1px}.cl .cd{font-size:13px;text-transform:uppercase;letter-spacing:.02em;color:var(--mu);margin:2px 0 7px}.cl .ci{font-size:13px;margin-top:4px;display:flex;gap:7px;align-items:flex-start}.cl .ci i{font-style:normal;flex:none;width:18px;text-align:center}.cl .ci span{flex:1}.cl.dn .cs{color:var(--mu)}
 .dp{display:inline-block;font-size:11px;border:1px solid var(--ln);border-radius:12px;padding:1px 8px;margin:2px 3px 0 0;color:var(--mu)}
 .dp.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .cl.dn{opacity:.5}.cl.dn .tm,.cl.dn .bd b{text-decoration:line-through}.dnb{font:inherit;font-size:12px;background:none;color:var(--mu);border:1px solid var(--ln);border-radius:14px;padding:3px 10px;margin-top:6px}.nw{display:inline-block;font-size:11px;background:var(--ok);color:#fff;border-radius:10px;padding:1px 8px;margin-left:6px}
@@ -97,7 +97,7 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div class="tabs" role="tablist"><button data-tab="ov" class="on">🏠 Overview</button><button data-tab="th">🧪 Thesis</button><button data-tab="sch">📅 Schedule</button><button data-tab="st">📝 Tasks</button><button data-tab="eu">🎓 Units</button><button data-tab="pg">📊 Grades</button></div>
 
 <div class="pn" id="tab-ov">
-<div class="card"><h2>Deadlines</h2><div id="ov_d"></div></div>
+<div class="card" id="ov_dc"><h2>⏰ Deadlines</h2><div id="ov_ds" class="lbl" style="display:none;margin:-4px 0 6px"></div><div id="ov_d"></div></div>
 <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 id="pr_t" style="margin:0">Today’s priorities</h2><input type="date" id="pr_d" style="width:auto"></div>
 <div id="pr_c"></div><div id="pr_l"></div><div class="lbl" id="pr_s" style="margin:4px 0"></div>
 <div class="row"><input id="pr_i" placeholder="Add a priority…" maxlength="80" style="flex:1"></div>
@@ -105,7 +105,6 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div class="lbl" style="margin-top:8px">Tip: keep it short and realistic. Pick 3 to 5 things you can truly finish.</div></div>
 <div class="row"><button class="qb" id="ov_qd">＋ Deadline</button><button class="qb" id="ov_qa">＋ Absence</button></div>
 <div class="card"><h2 id="ov_t">Today</h2><div id="ov_c"></div><div class="lbl" style="margin-top:8px">Free time today</div><div id="ov_f"></div></div>
-<div class="card" id="ov_al" style="border-color:#d64545;display:none"><h2>⏰ Due soon</h2><div id="ov_ab"></div><div class="row" style="margin-top:6px"><button id="ov_ax" class="ic" style="width:auto;padding:0 12px">Hide for today</button></div></div>
 <div class="card" id="ov_hc" style="border-color:var(--pen)"><h2>⚠ Heads up</h2><div id="ov_r"></div></div>
 <div class="card" id="ov_uc"><h2>Unlocking after this semester</h2><div class="lbl" style="margin:-6px 0 6px">If you pass your current subjects</div><div id="ov_u"></div></div>
 <div class="card" style="display:flex;gap:10px;align-items:center;justify-content:space-between"><div id="ov_q" style="font-style:italic"></div><button class="ic" id="ov_qn" title="Another quote">↻</button></div>
@@ -144,7 +143,7 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div class="card"><h2>Course requirements</h2><div class="lbl" style="margin-bottom:6px">List what each subject needs (plates, projects, final requirement) and tick them off so you never get a 7.2.</div><div id="rq_l"></div></div>
 <div class="card"><h2>Phone reminders</h2><div class="lbl" style="margin-bottom:6px">Sends your open deadlines and planned tasks to your Calendar with alerts the day before and on the day. Run it again after adding more; it updates instead of duplicating.</div><div class="row"><button id="rem_b">📲 Add reminders to my phone</button></div><div class="lbl" id="rem_h" style="margin-top:4px"></div><div class="lbl" style="margin:10px 0 6px">Also get a notification when you open the tracker and something is due today or tomorrow. It only fires while the app is open; the calendar reminders above cover the times it is closed.</div><div class="row"><button id="nt_b">🔔 Alerts: Off</button></div><div class="lbl" id="nt_h" style="margin-top:4px"></div></div>
 <details id="dd_push"><summary><b>Push notifications when the app is closed</b><span>tap to open</span></summary><div style="padding:0 14px 14px">
-<div class="lbl" style="margin-bottom:8px">A free GitHub job checks your deadlines and priorities every 15 minutes and sends a real push through the free ntfy app: a morning summary at 7 AM, a heads-up at 8 PM for tomorrow, and a reminder 1 hour before anything with a time. One-time setup, about 10 minutes. Full steps are in push-setup.md.</div>
+<div class="lbl" style="margin-bottom:8px">A free GitHub job checks your deadlines and priorities every 15 minutes and sends a real push through the free ntfy app: a morning summary at 7 AM, a heads-up at 8 PM for tomorrow, and reminders 30 and 15 minutes before anything with a time. One-time setup, about 10 minutes. Full steps are in push-setup.md.</div>
 <div class="lbl" id="pn_s" style="margin-bottom:8px"></div>
 <div class="row"><button id="pn_c">Create my notification topic</button><button class="g" id="pn_t">Send test notification</button></div>
 <div class="row"><button class="g" id="pn_ct">Copy topic</button><button class="g" id="pn_cg">Copy Gist ID</button></div>
@@ -201,7 +200,7 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 
 <div class="ov" id="cov"><div class="modal" style="text-align:left"><h2 id="cmt">Add a class</h2>
 <div class="fm">
-<div><label>Section code<input id="f_sec" placeholder="e.g. 2419" inputmode="numeric"></label></div>
+<div><label>Section code<input id="f_sec" inputmode="numeric"></label></div>
 <div><label>Subject code<input id="f_code" readonly placeholder="Auto-filled"></label><datalist id="dl"></datalist></div>
 <div class="w"><label>Description<select id="f_desc" style="width:100%"></select></label></div>
 <div><label>Units<input id="f_units" type="number" readonly placeholder="Auto-filled"></label></div>
@@ -211,7 +210,8 @@ input[type=date]{font:inherit;color:var(--tx);background:var(--bg);border:1px so
 <div><label>End time<input id="f_e" type="time"></label></div>
 <div class="w"><label style="color:var(--tx)"><input id="f_done" type="checkbox" style="width:auto"> Finished (grey it out)</label></div>
 <div class="w"><label>Room<input id="f_room" placeholder="e.g. BE 334"></label></div>
-<div class="w"><label>Link (BBL, Teams, etc.)<input id="f_link" placeholder="https://…"></label></div><div class="w"><label>Notes<input id="f_note" placeholder="e.g. bring calculator"></label></div>
+<div class="w"><label>Instructor<input id="f_ins" maxlength="80"></label></div>
+<div class="w"><label>Link (BBL, Teams, etc.)<input id="f_link"></label></div><div class="w"><label>Notes<input id="f_note"></label></div>
 </div>
 <div class="row" style="justify-content:space-between"><button class="g" id="cdel" style="color:#d64545">Delete</button><span class="row"><button class="g" id="ccx">Cancel</button><button id="csv">Save</button></span></div></div></div>
 
@@ -390,13 +390,13 @@ function renderSch(){
   $("wkw").innerHTML=`<div class="wk"><div class="hd"></div>${DAYS.map(d=>`<div class="hd">${d[1]}</div>`).join("")}<div style="position:relative;height:${H}px">${hrs.map(h=>`<span class="hr" style="position:absolute;left:0;right:0;top:${(h-sh)*PH-7}px">${t12(String(h).padStart(2,"0")+":00").replace(":00","")}</span>`).join("")}</div>${cols}</div>`}
  $("hfb").textContent=S.hf?"Show finished":"Hide finished";$("hfb").classList.toggle("on",!!S.hf);
  const ord=cl.map((c,i)=>({c,i})).filter(o=>inTm(o.c)&&!(S.hf&&isDone(o.c))).sort((a,b)=>(isDone(a.c)-isDone(b.c))||(a.c.s||"99:99").localeCompare(b.c.s||"99:99"));
- $("cls").innerHTML=ord.map(({c,i})=>`<div class="cl${isDone(c)?" dn":""}" data-ce="${c.id}" style="cursor:pointer"><div class="sw" style="background:${isDone(c)?"#8b8b94":COL(i)}"></div><div class="tm">${t12(c.s)}<small>to ${t12(c.e)}</small></div><div class="bd"><b>${esc(c.code)} · ${esc(c.desc)}${isDone(c)?"":'<span class="nw">Now</span>'}</b><div class="mt2">${c.room?"Room "+esc(c.room)+" · ":""}${c.u} units · ${esc(c.term)}${c.sec?" · Section "+esc(c.sec):""}</div>${c.note?'<div class="mt2">📝 '+esc(c.note)+'</div>':""}${c.link?'<div class="mt2"><a href="'+esc(c.link)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">🔗 Open link</a></div>':""}${confl(c,cl).length?'<div class="mt2" style="color:#d64545">⚠ Overlaps with '+confl(c,cl).map(o=>esc(o.code)).join(", ")+'</div>':""}<div>${(c.days&&c.days.length)?DAYS.map(d=>`<span class="dp${c.days.includes(d[0])?" on":""}">${d[1]}</span>`).join(""):`<span class="dp">Days not set${c.dc?" · portal code "+esc(c.dc):""}</span>`}</div><button class="dnb" data-dn="${c.id}">${isDone(c)?"↩ Mark as ongoing":"✓ Mark as done"}</button></div></div>`).join("")||'<div class="lbl">Nothing here yet.</div>';
+ $("cls").innerHTML=ord.map(({c,i})=>`<div class="cl${isDone(c)?" dn":""}" data-ce="${c.id}" style="cursor:pointer"><div class="sw" style="background:${isDone(c)?"#8b8b94":COL(i)}"></div><div class="bd"><div class="ch"><span class="cs" title="Section">${c.sec?esc(c.sec):""}</span>${isDone(c)?"":'<span class="nw">Now</span>'}</div><b class="cc">${esc(c.code)}</b><div class="cd">${esc(c.desc)}</div><div class="ci"><i>📅</i><span>${c.term==="Sem"?"Semestral":esc(c.term)} • ${S.sm==="2"?"2nd Semester":S.sm==="3"?"Summer":"1st Semester"} • SY ${esc(S.sy)}</span></div><div class="ci"><i>📍</i><span>${c.room?esc(c.room):"No room"} • ${c.s&&c.e?t12(c.s)+" – "+t12(c.e):"Time not set"}</span></div><div class="ci"><i>👤</i><span>${c.ins?esc(c.ins):"Instructor not set"}</span></div><div class="mt2" style="margin-top:6px">${c.u} unit${+c.u===1?"":"s"}</div>${c.note?'<div class="mt2">📝 '+esc(c.note)+'</div>':""}${c.link?'<div class="mt2"><a href="'+esc(c.link)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">🔗 Open link</a></div>':""}${confl(c,cl).length?'<div class="mt2" style="color:#d64545">⚠ Overlaps with '+confl(c,cl).map(o=>esc(o.code)).join(", ")+'</div>':""}<div>${(c.days&&c.days.length)?DAYS.map(d=>`<span class="dp${c.days.includes(d[0])?" on":""}">${d[1]}</span>`).join(""):`<span class="dp">Days not set${c.dc?" · portal code "+esc(c.dc):""}</span>`}</div><button class="dnb" data-dn="${c.id}">${isDone(c)?"↩ Mark as ongoing":"✓ Mark as done"}</button></div></div>`).join("")||'<div class="lbl">Nothing here yet.</div>';
  /* enrolled units */
  const tmN=S.tm==="2"?"2nd Term":"1st Term",ec=cl,tot=nu(ec.reduce((a,c)=>a+(+c.u||0),0)),codes=new Set(cl.map(c=>c.code));
  const prog=D.flatMap(x=>x[1]).filter(s=>stOf(s)==="prog"),tp=prog.reduce((a,s)=>a+s[2],0);
  $("euv").textContent=tot+" units";const cu=nu(ec.filter(c=>!isDone(c)).reduce((a,c)=>a+(+c.u||0),0)),fu=nu(tot-cu);$("eus").textContent=`${ec.length} class${ec.length===1?"":"es"} this semester · ${ec.filter(c=>!isDone(c)).length} ongoing now`;
- const miss=prog.filter(s=>!codes.has(s[0])).map(s=>s[0]),extra=cl.filter(c=>find(c.code)&&stOf(find(c.code))!=="prog").map(c=>c.code);
- $("euc").textContent=tot===tp&&!miss.length&&!extra.length?`✅ Matches the ${prog.length} subjects marked “Enrolled · in progress” in your tracker (${tp} units).`:`⚠ Your tracker has ${prog.length} subjects (${tp} units) marked “Enrolled · in progress”.${miss.length?" Not on your schedule: "+miss.join(", ")+".":""}${extra.length?" On your schedule but not marked in progress: "+extra.join(", ")+".":""}`;
+ const miss=prog.filter(s=>!codes.has(s[0])).map(s=>s[0]),extra=cl.filter(c=>!isDone(c)&&find(c.code)&&stOf(find(c.code))!=="prog").map(c=>c.code),fin=prog.filter(s=>cl.some(c=>c.code===s[0])&&cl.filter(c=>c.code===s[0]).every(isDone)).map(s=>s[0]);
+ $("euc").textContent=cu===tp&&!miss.length&&!extra.length&&!fin.length?`✅ Matches the ${prog.length} subjects marked “Enrolled · in progress” in your tracker (${tp} units).`:`⚠ Your tracker has ${prog.length} subjects (${tp} units) marked “Enrolled · in progress”.${miss.length?" Not on your schedule: "+miss.join(", ")+".":""}${extra.length?" Ongoing on your schedule but not marked in progress: "+extra.join(", ")+".":""}${fin.length?" Marked in progress but finished on your schedule: "+fin.join(", ")+".":""}`;
  $("eul").innerHTML=ec.map(c=>`<div class="eu"><span><b>${esc(c.code)}</b> ${esc(c.desc)}</span><span>${c.u}</span></div>`).join("")+`<div class="eu"><b>Total</b><b>${tot}</b></div>`;
  const g={};ec.forEach(c=>{const t=c.term||"Sem";(g[t]=g[t]||{u:0,n:0});g[t].u+=+c.u||0;g[t].n++});
  $("eut2").innerHTML=Object.keys(g).map(t=>`<div class="eu"><span>${esc(t)}${t==="Sem"?" <span class=\"lbl\">(runs the whole semester)</span>":""}</span><span>${nu(g[t].u)} units · ${g[t].n} class${g[t].n===1?"":"es"}</span></div>`).join("")||'<div class="lbl">No classes yet.</div>';
@@ -476,8 +476,9 @@ function renderOv(){
  $("ov_f").innerHTML=gaps.map(g=>`<span class="chip">${t12(HM(g[0]))} – ${t12(HM(g[1]))} · ${DUR(g[1]-g[0])}</span>`).join("")||'<span class="lbl">No free time left today.</span>';
  const rc=x=>x&&x.dAt&&Date.now()-x.dAt<30000,tk=[];
  Object.keys(S.pri||{}).forEach(k=>S.pri[k].forEach(x=>{if(!x.d||rc(x)){const d=Math.round((new Date(k+"T00:00")-t0)/864e5);if(d>=1)tk.push({e:{type:"Task",code:"",title:x.t,date:k,time:x.tm||"",pass:x.n?"📝 "+x.n:"",done:x.d,id:"p:"+k+":"+x.id},d})}}));
- const ex=(S.exams||[]).filter(e=>!e.done||rc(e)).map(e=>({e:{...e,id:"d:"+e.id},d:Math.round((new Date(e.date+"T00:00")-t0)/864e5)})).concat(tk).sort((a,b)=>(!!a.e.done-!!b.e.done)||a.d-b.d),soon=ex.filter(o=>o.d<=14),later=ex.length-soon.length;
- $("ov_d").innerHTML=soon.map(({e,d})=>{const lab=d<0?(-d)+" day"+(d===-1?"":"s")+" overdue":d===0?"Today":d===1?"Tomorrow":"in "+d+" days";return `<div class="eu od${e.done?" dn":""}" data-od="${e.id}" style="cursor:pointer;gap:10px;align-items:flex-start"><span class="ckb">${e.done?"☑":"☐"}</span><span style="flex:1"><b>${esc(e.type)}${e.code?" · "+esc(e.code):""}</b>${e.title?" · "+esc(e.title):""}<br><span class="lbl">${new Date(e.date+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}${e.time?" · "+t12(e.time):""}${e.pass?" · "+esc(e.pass):""}</span></span><span style="${!e.done&&d<=2?"color:#d64545;font-weight:600":""}">${e.done?"done":lab}</span></div>`}).join("")||'<div class="lbl">No deadlines in the next 2 weeks.</div>';
+ const ex=(S.exams||[]).filter(e=>!e.done||rc(e)).map(e=>({e:{...e,id:"d:"+e.id},d:Math.round((new Date(e.date+"T00:00")-t0)/864e5)})).concat(tk).concat((()=>{try{return thDue().map(o=>({e:{type:o.t,code:"",title:"",date:o.k,time:o.tm||"",pass:"",done:false,id:"th:"+o.id},d:Math.round((new Date(o.k+"T00:00")-t0)/864e5),nov:o.nov})).filter(o=>!o.nov||o.d>=0)}catch(e){return[]}})()).sort((a,b)=>(!!a.e.done-!!b.e.done)||a.d-b.d||(a.e.time||"99").localeCompare(b.e.time||"99")),soon=ex.filter(o=>o.d<=14),later=ex.length-soon.length;
+ const urg=soon.filter(o=>!o.e.done&&o.d<=1).length;$("ov_dc").style.borderColor=urg?"#d64545":"";$("ov_ds").style.display=urg?"":"none";$("ov_ds").innerHTML=urg?`<b style="color:#d64545">${urg} need${urg===1?"s":""} attention now</b> · due today, tomorrow or overdue`:"";
+ $("ov_d").innerHTML=soon.map(({e,d})=>{const ur=!e.done&&d<=1,th=String(e.id).startsWith("th:");const lab=d<0?(-d)+" day"+(d===-1?"":"s")+" overdue":d===0?"Today":d===1?"Tomorrow":"in "+d+" days";return `<div class="eu od${e.done?" dn":""}"${th?"":` data-od="${e.id}"`} style="${th?"":"cursor:pointer;"}gap:10px;align-items:flex-start${ur?";border-left:3px solid #d64545;padding-left:8px;background:rgba(214,69,69,.07)":""}"><span class="ckb">${th?"📌":e.done?"☑":"☐"}</span><span style="flex:1"><b>${esc(e.type)}${e.code?" · "+esc(e.code):""}</b>${e.title?(e.type||e.code?" · ":"")+esc(e.title):""}<br><span class="lbl">${new Date(e.date+"T00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}${e.time?" · "+t12(e.time):""}${e.pass?" · "+esc(e.pass):""}</span></span><span style="${!e.done&&d<=2?"color:#d64545;font-weight:600":""}">${e.done?"done":lab}</span></div>`}).join("")||'<div class="lbl">No deadlines in the next 2 weeks.</div>';
  for(let i=0;i<=7;i++){const dt=new Date(t0);dt.setDate(t0.getDate()+i);const hh=PHH[YMD(dt)];if(hh)$("ov_d").innerHTML+=`<div class="eu"><span>🇵🇭 ${esc(hh[0])} <span class="lbl">· ${PHT[hh[1]]}</span></span><span class="lbl">${i===0?"today":i===1?"tomorrow":"in "+i+" days"}</span></div>`;const sn=S.sy==="2026-2027"?SCH[YMD(dt)]:"";if(sn)$("ov_d").innerHTML+=`<div class="eu"><span>🏫 ${sn}</span><span class="lbl">${i===0?"today":i===1?"tomorrow":"in "+i+" days"}</span></div>`}
  if(later>0)$("ov_d").innerHTML+=`<div class="lbl" style="margin-top:6px">+ ${later} more later</div>`;
  const R=[];act.filter(c=>(c.abs||0)>=AW).forEach(c=>{const[l,m]=absInfo(c);R.push(`<span style="${absStyle(l)}"><b>${esc(c.code)}</b> · ${c.abs}/${AL} absences: ${m.replace("⚠ ","")}</span>`)});
@@ -543,18 +544,15 @@ function dueList(){const now=new Date(),t0=new Date(now.getFullYear(),now.getMon
 const dueLab=d=>d<0?(-d)+" day"+(d===-1?"":"s")+" overdue":d===0?"Today":"Tomorrow";
 function ntState(){const h=$("nt_h"),b=$("nt_b");if(!b)return;const ok=typeof Notification!=="undefined";
  const on=ok&&NF.on&&Notification.permission==="granted";b.textContent="🔔 Alerts: "+(on?"On":"Off");
- h.textContent=!ok?"Notifications are not available here. On iPhone, add the tracker to your Home Screen and open it from there (iOS 16.4 or newer). The Due soon banner still works.":ok&&Notification.permission==="denied"?"Notifications are blocked for this site. Allow them in your phone or browser settings, then tap again.":""}
+ h.textContent=!ok?"Notifications are not available here. On iPhone, add the tracker to your Home Screen and open it from there (iOS 16.4 or newer). The Deadlines card still works.":ok&&Notification.permission==="denied"?"Notifications are blocked for this site. Allow them in your phone or browser settings, then tap again.":""}
 function ntShow(title,body){try{if("serviceWorker"in navigator&&navigator.serviceWorker.ready){navigator.serviceWorker.ready.then(r=>r.showNotification(title,{body,tag:"gwa-due",renotify:true})).catch(()=>{try{new Notification(title,{body})}catch(e){}});return}}catch(e){}try{new Notification(title,{body})}catch(e){}}
-function chkAlerts(){const L=dueList(),card=$("ov_al");if(!card)return;ntState();const td=YMD(new Date());
- const hide=NF.hide===td;card.style.display=L.length&&!hide?"":"none";
- $("ov_ab").innerHTML=L.map(o=>`<div class="eu"><span><b>${esc(o.t)}</b>${o.time?" · "+t12(o.time):""}</span><span style="${o.d<=0?"color:#d64545;font-weight:600":""}">${dueLab(o.d)}</span></div>`).join("");
+function chkAlerts(){const L=dueList();ntState();const td=YMD(new Date());
  if(typeof Notification==="undefined"||!NF.on||Notification.permission!=="granted"||!L.length)return;
  NF.sent=NF.sent||{};const nm=new Date().getHours()*60+new Date().getMinutes(),fresh=[];
  L.forEach(o=>{const k=o.id+"|"+td;if(!NF.sent[k]){NF.sent[k]=1;fresh.push(dueLab(o.d)+": "+o.t+(o.time?" at "+t12(o.time):""))}
-  if(o.d===0&&o.time){const m=mins(o.time),k2=o.id+"|"+td+"|1h";if(m-nm<=60&&m-nm>=0&&!NF.sent[k2]){NF.sent[k2]=1;fresh.push("In "+(m-nm)+" min: "+o.t)}}});
+  if(o.d===0&&o.time){const m=mins(o.time),L=m-nm,a=o.id+"|"+td+"|"+o.time+"|30m",b=o.id+"|"+td+"|"+o.time+"|15m";if(L<=15&&L>=0){if(!NF.sent[b]){NF.sent[a]=1;NF.sent[b]=1;fresh.push("In "+L+" min: "+o.t)}}else if(L<=30&&L>15&&!NF.sent[a]){NF.sent[a]=1;fresh.push("In "+L+" min: "+o.t)}}});
  const ks=Object.keys(NF.sent);if(ks.length>300)ks.filter(k=>k.indexOf(td)<0).forEach(k=>delete NF.sent[k]);
  if(fresh.length){ntSave();ntShow("⏰ "+fresh.length+" deadline"+(fresh.length===1?"":"s")+" due",fresh.slice(0,5).join("\n"))}}
-$("ov_ax").onclick=()=>{NF.hide=YMD(new Date());ntSave();chkAlerts()};
 $("nt_b").onclick=async()=>{if(typeof Notification==="undefined"){ntState();return}
  if(NF.on&&Notification.permission==="granted"){NF.on=false;ntSave();chkAlerts();return}
  let p=Notification.permission;if(p!=="granted"){try{p=await Notification.requestPermission()}catch(e){}}
@@ -564,7 +562,7 @@ function buildRem(){const st=new Date().toISOString().replace(/[-:]|\.\d{3}/g,""
  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Class Tracker//EN","CALSCALE:GREGORIAN"];let n=0;
  const al=tr=>L.push("BEGIN:VALARM","TRIGGER:"+tr,"ACTION:DISPLAY","DESCRIPTION:Reminder","END:VALARM");
  const ev=(uid,k,tm,sum,desc,task)=>{L.push("BEGIN:VEVENT","UID:"+uid+"@class-tracker","DTSTAMP:"+st);
-  if(tm){L.push("DTSTART:"+n8(k)+"T"+tm.replace(":","")+"00","DURATION:PT1H","SUMMARY:"+e2(sum),"DESCRIPTION:"+e2(desc));if(!task)al("-P1D");al("-PT1H")}
+  if(tm){L.push("DTSTART:"+n8(k)+"T"+tm.replace(":","")+"00","DURATION:PT1H","SUMMARY:"+e2(sum),"DESCRIPTION:"+e2(desc));if(!task)al("-P1D");al("-PT30M");al("-PT15M")}
   else{L.push("DTSTART;VALUE=DATE:"+n8(k),"SUMMARY:"+e2(sum),"DESCRIPTION:"+e2(desc));if(!task)al("-PT15H");al("PT8H")}
   L.push("END:VEVENT");n++};
  (S.exams||[]).filter(e=>!e.done&&e.date>=t).forEach(e=>ev(e.id,e.date,e.time,e.type+(e.code?" · "+e.code:"")+(e.title?" · "+e.title:""),e.pass||"",false));
@@ -752,7 +750,7 @@ function openC(id){
  const c=id?CL().find(x=>x.id===id):null;EC=c?c.id:null;
  $("cmt").textContent=c?"Edit class":"Add a class";$("cdel").hidden=!c;
  const v=c||{sec:"",code:"",desc:"",u:"",term:"Sem",days:[],dc:"",s:"",e:"",room:""};
- $("f_sec").value=v.sec;$("f_desc").innerHTML=subjOpts(v.code);$("f_desc").value=find(v.code)?v.code:"";$("f_code").value=v.code;$("f_units").value=v.u;$("f_term").value=v.term;$("f_dc").value=dcKey(v);$("f_s").value=v.s;$("f_e").value=v.e;$("f_room").value=v.room;$("f_link").value=v.link||"";$("f_note").value=v.note||"";
+ $("f_sec").value=v.sec;$("f_desc").innerHTML=subjOpts(v.code);$("f_desc").value=find(v.code)?v.code:"";$("f_code").value=v.code;$("f_units").value=v.u;$("f_term").value=v.term;$("f_dc").value=dcKey(v);$("f_s").value=v.s;$("f_e").value=v.e;$("f_room").value=v.room;$("f_ins").value=v.ins||"";$("f_link").value=v.link||"";$("f_note").value=v.note||"";
  $("f_done").checked=c?isDone(c):false;
  $("cov").classList.add("on")}
 $("addc").onclick=()=>openC(null);
@@ -762,7 +760,7 @@ $("csv").onclick=()=>{
  const sj=find($("f_desc").value),code=sj?sj[0]:"",desc=sj?dsc(sj[1]):"",u=sj?sj[2]:NaN,s=$("f_s").value,e=$("f_e").value;
  if(!sj){alert("Please choose a subject from the list.");return}
  if((s&&!e)||(!s&&e)||(s&&e&&mins(e)<=mins(s))){alert("Please enter a start time and an end time that is later than the start.");return}
- const o={id:EC||"c"+Date.now(),sec:$("f_sec").value.trim(),code,desc,u,term:$("f_term").value,days:DC[$("f_dc").value]?DC[$("f_dc").value].slice():[],dc:DCL[$("f_dc").value]||"",s,e,room:$("f_room").value.trim(),done:$("f_done").checked,link:nl($("f_link").value),note:$("f_note").value.trim()};{const od=CL().find(x=>x.id===o.id);if(od){o.abs=od.abs;o.rq=od.rq;o.absLog=od.absLog;o.lim=od.lim}}
+ const o={id:EC||"c"+Date.now(),sec:$("f_sec").value.trim(),code,desc,u,term:$("f_term").value,days:DC[$("f_dc").value]?DC[$("f_dc").value].slice():[],dc:DCL[$("f_dc").value]||"",s,e,room:$("f_room").value.trim(),ins:$("f_ins").value.trim(),done:$("f_done").checked,link:nl($("f_link").value),note:$("f_note").value.trim()};{const od=CL().find(x=>x.id===o.id);if(od){o.abs=od.abs;o.rq=od.rq;o.absLog=od.absLog;o.lim=od.lim}}
  const cf=confl(o,CL());
  if(cf.length&&!confirm("This class overlaps with:\n"+cf.map(q=>"• "+q.code+" · "+q.desc+" ("+q.days.join(" ")+" "+t12(q.s)+"–"+t12(q.e)+")").join("\n")+"\n\nSave it anyway?"))return;
  const cl=CL(),i=cl.findIndex(x=>x.id===o.id);if(i>=0)cl[i]=o;else cl.push(o);{const q=find(code);if(q&&stOf(q)==="none"&&!lkOf(code,"none"))S.st[code]="prog"}
